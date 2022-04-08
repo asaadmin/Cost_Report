@@ -98,8 +98,12 @@ class FileUpload extends Controller
             "over_under_Other"=> 0
         ];
 
-        $formats = Format::where('sessionID', Session::getId())->orderBy('forder')->get();
+        $formats = Format::where('sessionID', Session::getId())->orderBy('forder', 'ASC')->get();
         $i=1;
+
+        $cat_total =1;
+        $collectCategory=1;
+        $producationTotal='';
         foreach($formats as $format)
         {
             $accountCost = Cost::where(['sessionID' => Session::getId(), "account_no" => $format->account_no])->first();
@@ -108,6 +112,7 @@ class FileUpload extends Controller
             $out['rows'][$i]["format"] = $format;
             $out['rows'][$i]["cost"] = $getCost;
 
+            // total setup
             if(!empty($getCost))
             {
                 switch ($format->production) {
@@ -164,7 +169,7 @@ class FileUpload extends Controller
                             $out["totals"]["over_under_Other"] = $out["totals"]["over_under_Other"]  + $getCost['variance'];
                         break;
                 }
-
+                // Grand Total setup
                 $out["totals"]["period_cost_Grand"] =$out["totals"]["period_cost_Grand"] + $getCost['period_cost'];
                 $out["totals"]["cost_to_date_Grand"] =$out["totals"]["cost_to_date_Grand"]+ $getCost['cost_to_date'];
                 $out["totals"]["pos_Grand"] = $out["totals"]["pos_Grand"] + $getCost['pos'];
@@ -221,16 +226,16 @@ class FileUpload extends Controller
                     "variance" . $format->account => $getCost['variance'],
                     "last_ctd" . $format->account => $getCost['last_ctd'],
                     "last_efc" . $format->account => $getCost['last_efc'],
+                    "cat_num" => $cat_total
                 ];
-                
 
             }
             // condition row 2 category total
-            else if($format->heading==2 && $format->account==2   && $format->production!='Grand')
+            else if($format->heading==2 && $format->account==2  && $format->production!='Grand')
             {
                 $out['rows'][$i]['row'] = [
                     "condition" . $format->account => "condition_2",
-                    "description" . $format->account => $format->description,
+                    "description" . $format->account => "Total",
                     "acct_" . $format->account => $format->account_no,
                     "period_cost" . $format->account => $out["totals"]["period_cost_sub"],
                     "cost_to_date_" . $format->account => $out["totals"]["cost_to_date_sub"],
@@ -245,6 +250,9 @@ class FileUpload extends Controller
                     "variance" . $format->account => $out["totals"]["variance_sub"],
                     "last_ctd" . $format->account => $getCost['last_ctd'],
                     "last_efc" . $format->account => $getCost['last_efc'],
+                    "cat_num" => $cat_total,
+                    "category_id"=> $collectCategory,
+                    "has_prodcuation_total" => $producationTotal
                 ];
                 $out["totals"]["period_cost_sub"]=0;
                 $out["totals"]["cost_to_date_sub"]=0;
@@ -257,6 +265,9 @@ class FileUpload extends Controller
                 $out["totals"]["total_budget_sub"]=  0;
                 $out["totals"]["over_under_sub"]=0;
                 $out["totals"]["variance_sub"]= 0;
+
+                $collectCategory = $format->id;
+                $cat_total++;
             }
             // condition row 3 and above and below the line total
             else if($format->category==0 AND $format->description != ''  AND $format->production!='Grand')
@@ -278,35 +289,41 @@ class FileUpload extends Controller
                     "variance" . $format->account => $out["totals"]["variance_".$format->production],
                     "last_ctd" . $format->account => $getCost['last_ctd'],
                     "last_efc" . $format->account => $getCost['last_efc'],
+                    "cat_num" => $cat_total,
+                    "is_producation_total"=> $format->production
                 ];
+        
             }
             // condition row 4
             else if($format->account==1 || $format->category!=0)
             {
                 $out['rows'][$i]['row'] = [
-                    "condition" . $format->account => $format->account_no,
-                    "description" . $format->account => $format->description,
-                    "acct_" . $format->account => $format->account_no,
-                    "period_cost" . $format->account => $getCost['period_cost'],
+                    "condition" . $format->account     => "condition_4",
+                    "acct_" . $format->account         => $format->account_no,
+                    "description" . $format->account   => $format->description,
+                    "period_cost" . $format->account   => $getCost['period_cost'],
                     "cost_to_date_" . $format->account => $getCost["cost_to_date"],
-                    "pos_" . $format->account => $getCost["pos"],
-                    "total_costs" . $format->account => $getCost["total_costs"],
-                    "etc" . $format->account => $getCost["etc"],
-                    "efc" . $format->account => $getCost["efc"],
-                    "budget" . $format->account => $getCost["budget"],
+                    "pos_" . $format->account          => $getCost["pos"],
+                    "total_costs" . $format->account   => $getCost["total_costs"],
+                    "etc" . $format->account           => $getCost["etc"],
+                    "efc" . $format->account           => $getCost["efc"],
+                    "budget" . $format->account        => $getCost["budget"],
                     "approved_overage" . $format->account => $getCost["approved_overage"],
-                    "total_budget" . $format->account => $getCost["total_budget"],
-                    "over_under" . $format->account => $getCost["over_under"],
-                    "variance" . $format->account => $getCost["variance"],
-                    "last_ctd" . $format->account => $getCost['last_ctd'],
-                    "last_efc" . $format->account => $getCost['last_efc'],
+                    "total_budget" . $format->account  => $getCost["total_budget"],
+                    "over_under" . $format->account    => $getCost["over_under"],
+                    "variance" . $format->account      => $getCost["variance"],
+                    "last_ctd" . $format->account      => $getCost['last_ctd'],
+                    "last_efc" . $format->account      => $getCost['last_efc'],
+                    "cat_num"                          => $cat_total,
+                    "collectCategory"                  => $collectCategory
                 ];
+                $producationTotal = $format->production;
             }else
             {
                 $out['rows'][$i]['row'] = [
-                    "condition" . $format->account => "Grand Total",
-                    "description" . $format->account => "Grand Total",
+                    "condition" . $format->account => "grand_total",
                     "acct_" . $format->account => $format->account_no,
+                    "description" . $format->account => "Grand Total condtion_5",
                     "period_cost" . $format->account => $out["totals"]["period_cost_Grand"],
                     "cost_to_date_" . $format->account => $out["totals"]["cost_to_date_Grand"],
                     "pos_" . $format->account => $out["totals"]["pos_Grand"],
@@ -320,6 +337,7 @@ class FileUpload extends Controller
                     "variance" . $format->account => $out["totals"]["variance_Grand"],
                     "last_ctd" . $format->account => $getCost['last_ctd'],
                     "last_efc" . $format->account => $getCost['last_efc'],
+                    "cat_num" => $cat_total 
                 ];
             }
             
@@ -327,8 +345,6 @@ class FileUpload extends Controller
         } // endforeach
         return $out;
     }
-
-
 
     public function save(Request $request)
     {
@@ -339,7 +355,7 @@ class FileUpload extends Controller
         $sheets = (new FastExcel)->importSheets(storage_path('app/' . $path));
         $this->insertCosts($sheets[0]);
         $this->insertFormat($sheets[1]);
-        return redirect('/');
+        return redirect('/editdata');
     }
 
     public function export()
@@ -359,7 +375,7 @@ class FileUpload extends Controller
         //Format::Truncate();
         Cost::where('sessionID', Session::getId())->delete();
         Format::Truncate('sessionID', Session::getId())->delete();
-        return redirect()->back()->with('message', 'IT WORKS!');
+        return redirect("/");
     }
 
 
@@ -438,7 +454,8 @@ class FileUpload extends Controller
         foreach($data['rows'] as $row){
             $formatData[]=[
                 "id" => $row["format"]->id,
-                "account_no" => $row['row']["condition" . $row["format"]->account],
+                "condition"=> $row['row']["condition" . $row["format"]->account],
+                "account_no" => $row['row']["acct_" . $row["format"]->account],
                 "description" => $row['row']["description" . $row["format"]->account],
                 "period_cost" => $row['row']["period_cost" . $row["format"]->account],
                 "cost_to_date" => $row['row']["cost_to_date_" . $row["format"]->account],
@@ -453,6 +470,13 @@ class FileUpload extends Controller
                 "variance" => $row['row']["variance" . $row["format"]->account],
                 "last_ctd" => $row['row']["last_ctd" . $row["format"]->account],
                 "last_efc" => $row['row']["last_efc" . $row["format"]->account],
+                "production" => $row["format"]->production,
+                "cat_num" => $row['row']['cat_num'],
+                "category_id" => !empty($row['row']['category_id']) ? $row['row']['category_id'] : '',
+                "collectCategory" => !empty($row['row']['collectCategory']) ? $row['row']['collectCategory'] : '',
+                "is_producation_total" => !empty($row['row']['is_producation_total']) ? $row['row']['is_producation_total'] : '',
+                "has_prodcuation_total" => !empty($row['row']['has_prodcuation_total']) ? $row['row']['has_prodcuation_total'] : '',
+                
             ];
         }
 

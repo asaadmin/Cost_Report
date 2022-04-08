@@ -8,13 +8,11 @@
 
     </x-table-data>
 
-    <a href="{{route('reset')}}">Reset</a>
-
 @else
 
-   <div class="container mt-5">
+    <div class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center py-4 sm:pt-0">
         <form action="{{route('fileUpload')}}" method="post" enctype="multipart/form-data">
-          <h3 class="text-center mb-5">Upload File in Laravel</h3>
+          <h3 class="text-center mb-5">Upload excel file</h3>
             @csrf
             @if ($message = Session::get('success'))
             <div class="alert alert-success">
@@ -33,10 +31,11 @@
             <div class="custom-file">
                 <input type="file" name="file" class="custom-file-input" id="chooseFile">
                 <label class="custom-file-label" for="chooseFile">Select file</label>
+                <button type="submit" name="submit" class="button-7">
+                    Upload file
+                </button>
             </div>
-            <button type="submit" name="submit" class="btn btn-primary btn-block mt-4">
-                Upload file
-            </button>
+            
         </form>
     </div>
 @endif
