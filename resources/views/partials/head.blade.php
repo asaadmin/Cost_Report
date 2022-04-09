@@ -8,8 +8,10 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
 
 <link href="https://unpkg.com/tabulator-tables@5.1.8/dist/css/tabulator.min.css" rel="stylesheet">
-<script type="text/javascript" src="https://unpkg.com/tabulator-tables@5.1.8/dist/js/tabulator.min.js"></script>
 
+<script type="text/javascript" src="{{ mix('js/tabulatorHelper.js') }}"></script>
+
+<script type="text/javascript" src="https://unpkg.com/tabulator-tables@5.1.8/dist/js/tabulator.min.js"></script>
 <script type="text/javascript" src="https://oss.sheetjs.com/sheetjs/xlsx.full.min.js"></script>
 
 <!-- Styles -->
@@ -17,3 +19,4 @@
 
 <!-- Scripts -->
 <script src="{{ mix('js/app.js') }}" defer></script>
+

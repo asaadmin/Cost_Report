@@ -1,5 +1,44 @@
 @import "normalize.css";
 
+.raw_cost_table {
+    border-collapse: collapse;
+    margin: auto;
+    thead{
+        font-weight: bold;
+        position: sticky;
+        top: 0;
+        background: aliceblue;
+    }
+    th, td {
+        border: 1px solid black;
+        text-align:center;
+        padding: 6px 10px;
+    }
+
+    .bold{
+        font-weight: bold;
+    }
+    .borderTop{
+        border-top: 1px solid #000000;
+    }
+    .borderTopAndBottom{
+        border-top: 1px solid #000000;
+        border-bottom: 1px solid #000000;
+    }
+    .borderDoubleTop{
+        border-top: 3px solid #000000;
+    }
+    .borderDoubleTopBottom{
+        border-top: 3px solid #000000;
+        border-bottom: 3px solid #000000;
+    }
+}
+
+div.cost-table {
+  height: 900px;
+  border: 1px solid black;
+}
+
 .button-7 {
   background-color: #0095ff;
   border: 1px solid transparent;

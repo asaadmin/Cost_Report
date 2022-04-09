@@ -18,7 +18,7 @@ use App\Http\Controllers\FileUpload;
 
 Route::get('/', [FileUpload::class, 'index']);
 
-Route::post('/fileupload', [FileUpload::class, 'save'])->name("fileUpload");
+Route::post('/fileupload', [FileUpload::class, 'saveFile'])->name("saveFile");
 Route::get('/editdata', function () {
     return view('pages.tabulator');
 })->name("editdata");
@@ -26,6 +26,9 @@ Route::get('/editdata', function () {
 Route::get('/export', [FileUpload::class, 'export'])->name("export");
 Route::get('/reset', [FileUpload::class, 'reset'])->name("reset");
 Route::get('/api/tabledata', [FileUpload::class, 'tabledata'])->name("tabledata");
+Route::get('/api/cleartables', [FileUpload::class, 'truncate'])->name("cleartables");
+
+
 
 
 
