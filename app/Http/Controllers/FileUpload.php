@@ -68,6 +68,8 @@ class FileUpload extends Controller
     {
         foreach($rows as $row)
         {
+            if(empty($row["Account Number"])) { continue; }
+            
             Cost::create([
                 "account_no" =>  $row["Account Number"],
 				"description" =>  $row["Account Description"],

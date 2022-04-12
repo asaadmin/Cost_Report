@@ -2,15 +2,21 @@
 
 .raw_cost_table {
     border-collapse: collapse;
+    border: 1px solid #000;
     margin: auto;
     thead{
         font-weight: bold;
         position: sticky;
         top: 0;
         background: aliceblue;
-    }
-    th, td {
         border: 1px solid black;
+    }
+    th{
+        text-align: center;
+        border: 1px solid black;
+        padding: 6px 10px;
+    }
+    td {
         text-align:center;
         padding: 6px 10px;
     }

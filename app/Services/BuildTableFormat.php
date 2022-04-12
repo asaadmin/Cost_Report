@@ -187,41 +187,69 @@ class BuildTableFormat
                 $out["totals"]["variance_Grand"] = $out["totals"]["variance_Grand"] + $getCost['over_under'];
                 $out["totals"]["over_under_Grand"] = $out["totals"]["over_under_Grand"] + $getCost['variance'];
             }
+            $out['rows'][$i] =[];
             // end cost not empty
+            $out['rows'][$i];
             
-            // condition row 1
+            // condition row 1 -> top heading
             if($format->heading == 1 && $format->account == 0 && $format->category == 0  && $format->production != 'Grand')
             {
                 $out['rows'][$i]  = [
                     "condition"     => "condition_1",
-                    "format_id"     => $format->id,
                     "cost_id"       => $getCost['id'],
+                    "format_id"     => $format->id,
                     "description"   => $format->description,
                     "acct_"         => $format->account_no,
                     "producation"   => $format->producation,
-                    "period_cost"   => $getCost['period_cost'],
-                    "cost_to_date_" => $getCost['cost_to_date'],
-                    "pos_"          => $getCost['pos'],
-                    "total_costs"   => $format->account_no,
-                    "etc"           => $getCost['etc'],
-                    "efc"           => $getCost['efc'],
-                    "budget"        => $getCost['budget'],
-                    "approved_overage"  => $getCost['approved_overage'],
-                    "total_budget"      => $getCost['total_budget'],
-                    "over_under"        => $getCost['over_under'],
-                    "variance"          => $getCost['variance'],
-                    "last_ctd"          => $getCost['last_ctd'],
-                    "last_efc"          => $getCost['last_efc'],
+                    "period_cost"   => "",
+                    "cost_to_date_" => "",
+                    "pos_"          => "",
+                    "total_costs"   => "",
+                    "etc"           => "",
+                    "efc"           => "",
+                    "budget"        => "",
+                    "approved_overage"  => "",
+                    "total_budget"      => "",
+                    "over_under"        => "",
+                    "variance"          => "",
+                    "last_ctd"          => "",
+                    "last_efc"          => "",
                     "cat_num"           => $cat_total,
                     "styling"           =>$this->_rowStyling($format)
                 ];
-
             }
-            // condition row 2 category total
+            // condition_2 -- second heading
+            elseif($format->account==1 && $format->account==1 && empty($format->producation) && $format->grand_total == 0)
+            {
+                $out['rows'][$i]  = [
+                    "condition"     => "condition_2",
+                    "cost_id"       => $getCost['id'],
+                    "format_id"     => $format->id,
+                    "description"   => $format->description,
+                    "acct_"         => $format->account_no,
+                    "producation"   => $format->producation,
+                    "period_cost"   => "",
+                    "cost_to_date_" => "",
+                    "pos_"          => "",
+                    "total_costs"   => "",
+                    "etc"           => "",
+                    "efc"           => "",
+                    "budget"        => "",
+                    "approved_overage"  => "",
+                    "total_budget"      => "",
+                    "over_under"        => "",
+                    "variance"          => "",
+                    "last_ctd"          => "",
+                    "last_efc"          => "",
+                    "cat_num"           => $cat_total,
+                    "styling"           =>$this->_rowStyling($format)
+                ];
+            }
+            // condition row 3 category total
             else if($format->heading == 2 && $format->account == 2  && $format->production != 'Grand')
             {
                 $out['rows'][$i]  = [
-                    "condition"  => "condition_2",
+                    "condition"  => "condition_3",
                     "format_id"     => $format->id,
                     "cost_id"       => $getCost['id'],
                     "description"   => "Total",
@@ -260,11 +288,11 @@ class BuildTableFormat
                 $collectCategory = $format->id;
                 $cat_total++;
             }
-            // condition row 3 and above and below the line total
+            // condition row 4 and above and below the line total
             else if($format->category == 0 AND $format->description != ''  AND $format->production != 'Grand')
             {
                 $out['rows'][$i]  = [
-                    "condition"  => "condition_3",
+                    "condition"  => "condition_4",
                     "format_id"     => $format->id,
                     "cost_id"       => $getCost['id'],
                     "description"   => $format->description,
@@ -289,11 +317,11 @@ class BuildTableFormat
                 ];
         
             }
-            // condition row 4
+            // condition row 5
             else if($format->account==1 || $format->category!=0)
             {
                 $out['rows'][$i]  = [
-                    "condition"      => "condition_4",
+                    "condition"      => "condition_5",
                     "format_id"     => $format->id,
                     "cost_id"       => $getCost['id'],
                     "acct_"          => $format->account_no,
@@ -317,7 +345,8 @@ class BuildTableFormat
                     "styling"           =>$this->_rowStyling($format)
                 ];
                 $producationTotal = $format->production;
-            }else
+            }
+            else
             {
                 $out['rows'][$i]  = [
                     "condition"     => "grand_total",
