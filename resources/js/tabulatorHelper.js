@@ -21,10 +21,18 @@ tabultorHelper = {
         }
         return s.join(dec);
     },
-
+    
     etcEditor: function(cell, onRendered, success, cancel){
 
-        if(cell.getData().condition == 'condition_1' || cell.getData().condition == 'condition_2' || cell.getData().condition == 'condition_3'){
+        var conditionRowsToAvoid = [
+            "condition_1",
+            "condition_2",
+            "condition_3",
+            "condition_4",
+            "grand_total"
+        ]
+        // Rows blocked
+        if(conditionRowsToAvoid.indexOf(cell.getData().condition) > -1){
             return;
         }
 
@@ -61,7 +69,7 @@ tabultorHelper = {
 
                 // Update category total
                 var rowsToBeSumed  = table.searchData([
-                    {field:"condition", type: "=", value: "condition_4"},
+                    {field:"condition", type: "=", value: "condition_5"},
                     {field:"collectCategory", type: "=", value: sameRowdata.collectCategory},
                 ]);
                 var categoryEtcSum=0, categoryEfCSum=0, categoryOverUnderSum=0, categoryVarianceSum=0; 
@@ -158,8 +166,15 @@ tabultorHelper = {
     },
     efcEditor: function(cell, onRendered, success, cancel){
 
-        // category and total blocked
-        if(cell.getData().condition == 'condition_1' || cell.getData().condition == 'condition_2' || cell.getData().condition == 'condition_3'){
+        var conditionRowsToAvoid = [
+            "condition_1",
+            "condition_2",
+            "condition_3",
+            "condition_4",
+            "grand_total"
+        ]
+        // Rows blocked
+        if(conditionRowsToAvoid.indexOf(cell.getData().condition) > -1){
             return;
         }
 
@@ -193,16 +208,17 @@ tabultorHelper = {
 
                 // Update category total
                 var rowsToBeSumed  = table.searchData([
-                    {field:"condition", type: "=", value: "condition_4"},
+                    {field:"condition", type: "=", value: "condition_5"},
                     {field:"collectCategory", type: "=", value: sameRowdata.collectCategory},
                 ]);
-
+                console.log(rowsToBeSumed)
                 var categoryEtcSum=0, categoryEfCSum=0, categoryOverUnderSum=0, categoryVarianceSum=0; 
                 rowsToBeSumed.forEach((row) => {
                     categoryEtcSum += Number(row.etc)
                     categoryEfCSum += Number(row.efc)
                     categoryOverUnderSum += Number(row.over_under)
                     categoryVarianceSum += Number(row.variance)
+                    
                 });
 
                 var rowsToBeUpdate = table.searchData([
@@ -286,6 +302,129 @@ tabultorHelper = {
         });
 
         return input;
+    },
+
+    addAccountNumberToCell: function(cell, formatterParams, onRendered){
+        //cell - the cell component
+        //formatterParams - parameters set for the column
+        //onRendered - function to call when the formatter has been rendered
+        //var cell = $("#example-table").tabulator("getRow", 24).getCell("name");
+        //$("#example-table").tabulator("getRow", 24).update({name:"steve");
+        //var data = table.getData();
+        //console.log(data)
+        var sameRowdata = cell.getData();
+        var row = cell.getRow();
+        var coloum = cell.getColumn()
+        var currentElement = cell.getElement()
+
+        onRendered(function(){
+            if(sameRowdata.condition == 'condition_3')
+            {
+                row.getElement().style.border  = '1px solid #000000';
+
+                switch (coloum.getField()) {
+                    case 'total_costs':
+                        currentElement.setAttribute('id', "total_costs_" + sameRowdata.cat_num)
+                        break;
+                    case 'etc':
+                        currentElement.setAttribute('id', "total_etc_" + sameRowdata.cat_num)
+                        break;
+                    case 'efc':
+                        currentElement.setAttribute('id', "total_efc_" + sameRowdata.cat_num)
+                        break;
+                    case 'over_under':
+                        currentElement.setAttribute('id', "total_over_" + sameRowdata.cat_num)
+                        break;
+                    case 'variance':
+                        currentElement.setAttribute('id', "total_variance_" + sameRowdata.cat_num)
+                        break;
+                }
+                // row.update({"account_no": ""});
+            }
+
+            if(sameRowdata.condition == 'condition_4')
+            {
+                row.getElement().style.border  = '1px solid #000000';
+                row.getElement().style.fontWeight  = '600';
+
+                switch (coloum.getField()) {
+                    case 'total_costs':
+                        currentElement.setAttribute('id', "total_costs_" + sameRowdata.account_no)
+                        break;
+                    case 'etc':
+                        currentElement.setAttribute('id', "total_" + sameRowdata.production)
+                        break;
+                    case 'efc':
+                        currentElement.setAttribute('id', "total_" + sameRowdata.production)
+                        break;
+                    case 'over_under':
+                        currentElement.setAttribute('id', "over_" + sameRowdata.account_no)
+                        break;
+                    case 'variance':
+                        currentElement.setAttribute('id', "variance_" + sameRowdata.account_no)
+                        break;
+                }
+            }
+
+            if(sameRowdata.condition == 'condition_5')
+            {
+                switch (coloum.getField()) {
+                    case 'total_costs':
+                        currentElement.setAttribute('id', "total_costs_" + sameRowdata.account_no)
+                        break;
+                    case 'etc':
+                        currentElement.setAttribute('id', "etc_" + sameRowdata.account_no)
+                        currentElement.classList.add("etc_"+ sameRowdata.production)
+                        currentElement.classList.add("etc_"+ sameRowdata.cat_num)
+                        break;
+                    case 'efc':
+                        currentElement.setAttribute('id', "efc_" + sameRowdata.account_no)
+                        currentElement.classList.add("efc_"+ sameRowdata.production)
+                        currentElement.classList.add("efc_"+ sameRowdata.cat_num)
+                        break;
+                    case 'budget':
+                        currentElement.setAttribute('id', "budget_" + sameRowdata.account_no)
+                        currentElement.classList.add("budget_"+ sameRowdata.production)
+                        currentElement.classList.add("budget_"+ sameRowdata.cat_num)
+                        break;
+                    case 'over_under':
+                        currentElement.setAttribute('id', "over_" + sameRowdata.account_no)
+                        currentElement.classList.add("over_"+ sameRowdata.production)
+                        currentElement.classList.add("over_"+ sameRowdata.cat_num)
+                        break;
+                    case 'variance':
+                        currentElement.setAttribute('id', "variance_" + sameRowdata.account_no)
+                        currentElement.classList.add("variance_"+ sameRowdata.production)
+                        currentElement.classList.add("variance_"+ sameRowdata.cat_num)
+                        break;
+                }
+            }
+
+            if(sameRowdata.condition == 'grand_total')
+            {
+                row.getElement().style.border  = '1px solid #000000';
+                row.getElement().style.fontWeight  = '600';
+            }
+
+        });
+        return cell.getValue();
+    },
+
+    tableToExcel: function (tableID, fileName) {
+        // Define your style class template.
+        var style = "<style>thead{font-weight: bold; color: #000;} th{border: none; color: black;font-weight: bold;} .bold{ font-weight: bold;} .borderTopAndBottom {border-top: 1px solid #000; border-bottom: 1px solid #000;}.borderDoubleTopBottom {border-top: 3px double #000;border-bottom: 3px double #000;} .borderTop {  border-top: 1px solid #000; } .borderDoubleTop{border-top: 3px double #000;}</style>";
+        var uri = 'data:application/vnd.ms-excel;base64,'
+        var template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]-->' + style + '</head><body><table>{table}</table></body></html>'
+        var base64 = function (s) {
+                return window.btoa(unescape(encodeURIComponent(s)))
+            }
+        var format = function (s, c) {
+                return s.replace(/{(\w+)}/g, function (m, p) { return c[p]; })
+            }
+        if (!tableID.nodeType) table = document.getElementById(tableID)
+        var ctx = { worksheet: fileName || 'Worksheet', table: table.innerHTML }
+        window.location.href = uri + base64(format(template, ctx))
+        return;
     }
 
 }

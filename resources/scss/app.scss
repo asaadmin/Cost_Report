@@ -40,6 +40,47 @@
     }
 }
 
+
+/* Tabultor table */
+
+#cost-table.tabulator{
+	transform: none!important;
+}
+.tabulator-headers{
+
+}
+.tabulator-tableholder{
+	
+	.tabulator-table{
+		position:relative;
+		.tabulator-row{
+
+			&:last-child{
+				position: fixed;
+    			bottom: 0;
+				background-color: #fff;
+				border: 1px solid #000000;
+			}
+		}
+
+	}
+
+}
+
+.tabulator-headers.sticky{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    z-index: 1;
+    .tabulator-col{
+		background-color: #FFFFFF!important;
+		border: 1px solid #000000;
+	}
+}
+
+
 div.cost-table {
   height: 900px;
   border: 1px solid black;

@@ -2,125 +2,23 @@
 @section('content')
 
     <a class="button-42" style="max-width:80px;" href="{{route('reset')}}">Reset</a>
+    <a class="button-42" style="max-width:100px; display:none;" href="#" onclick="downloadExcelSheet()">Download</a>
 
     <div id="cost-table" class="cost-table"></div>
 
     <script>
      // https://jsfiddle.net/nzxbcf7g/
 
-    var addAccountNumberToCell = function(cell, formatterParams, onRendered){
-        //cell - the cell component
-        //formatterParams - parameters set for the column
-        //onRendered - function to call when the formatter has been rendered
-        //var cell = $("#example-table").tabulator("getRow", 24).getCell("name");
-        //$("#example-table").tabulator("getRow", 24).update({name:"steve");
-        //var data = table.getData();
-        //console.log(data)
-        var sameRowdata = cell.getData();
-        var row = cell.getRow();
-        var coloum = cell.getColumn()
-        var currentElement = cell.getElement()
-
-        onRendered(function(){
-            if(sameRowdata.condition == 'condition_2')
-            {
-                row.getElement().style.border  = '1px solid #000000';
-
-                switch (coloum.getField()) {
-                    case 'total_costs':
-                        currentElement.setAttribute('id', "total_costs_" + sameRowdata.cat_num)
-                        break;
-                    case 'etc':
-                        currentElement.setAttribute('id', "total_etc_" + sameRowdata.cat_num)
-                        break;
-                    case 'efc':
-                        currentElement.setAttribute('id', "total_efc_" + sameRowdata.cat_num)
-                        break;
-                    case 'over_under':
-                        currentElement.setAttribute('id', "total_over_" + sameRowdata.cat_num)
-                        break;
-                    case 'variance':
-                        currentElement.setAttribute('id', "total_variance_" + sameRowdata.cat_num)
-                        break;
-                }
-                // row.update({"account_no": ""});
-            }
-
-            if(sameRowdata.condition == 'condition_3')
-            {
-                row.getElement().style.border  = '1px solid #000000';
-                row.getElement().style.fontWeight  = '600';
-
-                switch (coloum.getField()) {
-                    case 'total_costs':
-                        currentElement.setAttribute('id', "total_costs_" + sameRowdata.account_no)
-                        break;
-                    case 'etc':
-                        currentElement.setAttribute('id', "total_" + sameRowdata.production)
-                        break;
-                    case 'efc':
-                        currentElement.setAttribute('id', "total_" + sameRowdata.production)
-                        break;
-                    case 'over_under':
-                        currentElement.setAttribute('id', "over_" + sameRowdata.account_no)
-                        break;
-                    case 'variance':
-                        currentElement.setAttribute('id', "variance_" + sameRowdata.account_no)
-                        break;
-                }
-            }
-
-            if(sameRowdata.condition == 'condition_4')
-            {
-                switch (coloum.getField()) {
-                    case 'total_costs':
-                        currentElement.setAttribute('id', "total_costs_" + sameRowdata.account_no)
-                        break;
-                    case 'etc':
-                        currentElement.setAttribute('id', "etc_" + sameRowdata.account_no)
-                        currentElement.classList.add("etc_"+ sameRowdata.production)
-                        currentElement.classList.add("etc_"+ sameRowdata.cat_num)
-                        break;
-                    case 'efc':
-                        currentElement.setAttribute('id', "efc_" + sameRowdata.account_no)
-                        currentElement.classList.add("efc_"+ sameRowdata.production)
-                        currentElement.classList.add("efc_"+ sameRowdata.cat_num)
-                        break;
-                    case 'budget':
-                        currentElement.setAttribute('id', "budget_" + sameRowdata.account_no)
-                        currentElement.classList.add("budget_"+ sameRowdata.production)
-                        currentElement.classList.add("budget_"+ sameRowdata.cat_num)
-                        break;
-                    case 'over_under':
-                        currentElement.setAttribute('id', "over_" + sameRowdata.account_no)
-                        currentElement.classList.add("over_"+ sameRowdata.production)
-                        currentElement.classList.add("over_"+ sameRowdata.cat_num)
-                        break;
-                    case 'variance':
-                        currentElement.setAttribute('id', "variance_" + sameRowdata.account_no)
-                        currentElement.classList.add("variance_"+ sameRowdata.production)
-                        currentElement.classList.add("variance_"+ sameRowdata.cat_num)
-                        break;
-                }
-            }
-
-            if(sameRowdata.condition == 'grand_total')
-            {
-                row.getElement().style.border  = '1px solid #000000';
-                row.getElement().style.fontWeight  = '600';
-            }
-
-        });
-        return cell.getValue();
-    }
-
 
     //Create Tabulator on DOM element with id "example-table"
     var table = new Tabulator("#cost-table", {
-        maxHeight:"100%",
+        height:"100%",
         layout:"fitColumns",
         columnHeaderSortMulti:false,
-        placeholder:"No Data Set",
+        placeholder:[
+            {"id":1,"cost_id":0,"condition":"condition_1","account_no":"","producation":null,"description":"ABOVE THE LINE","period_cost":"","cost_to_date":"","pos":"","total_costs":"","etc":"","efc":"","budget":"","approved_overage":"","total_budget":"","over_under":"","variance":"","last_ctd":"","last_efc":"","cat_num":1,"category_id":"","collectCategory":"","is_producation_total":"","has_prodcuation_total":"","styling":" bold"},
+            {"id":2,"cost_id":0,"condition":"condition_2","account_no":"1100","producation":null,"description":"STORY & SCENARIO","period_cost":"","cost_to_date":"","pos":"","total_costs":"","etc":"","efc":"","budget":"","approved_overage":"","total_budget":"","over_under":"","variance":"","last_ctd":"","last_efc":"","cat_num":1,"category_id":"","collectCategory":"","is_producation_total":"","has_prodcuation_total":"","styling":" bold"}
+        ],
         columns:[
             {title:"Account Number", field:"account_no", headerSort:false},
             {title:"Account Description", field:"description", headerSort:false},
@@ -139,40 +37,40 @@
             {
                 title:"ETC", field:"etc", hozAlign:"center", headerSort:false,
                 editor:tabultorHelper.etcEditor,
-                formatter:addAccountNumberToCell
+                formatter:tabultorHelper.addAccountNumberToCell
             },
             {
                 title:"EFC", field:"efc", hozAlign:"center", headerSort:false,
                 editor:tabultorHelper.efcEditor,
-                formatter:addAccountNumberToCell
+                formatter:tabultorHelper.addAccountNumberToCell
             },
             {
                 title:"Budget", field:"budget", hozAlign:"center", headerSort:false,
-                formatter:addAccountNumberToCell
+                formatter:tabultorHelper.addAccountNumberToCell
             },
             {
                 title:"Approved Overage", field:"approved_overage", hozAlign:"center", headerSort:false,
-                formatter:addAccountNumberToCell
+                formatter:tabultorHelper.addAccountNumberToCell
             },
             {
                 title:"Total Budget", field:"total_budget", hozAlign:"center", headerSort:false,
-                formatter:addAccountNumberToCell
+                formatter:tabultorHelper.addAccountNumberToCell
             },
             {
                 title:"Over/(Under)", field:"over_under", hozAlign:"center", headerSort:false,
-                formatter:addAccountNumberToCell
+                formatter:tabultorHelper.addAccountNumberToCell
             },
             {
                 title:"Variance", field:"variance", hozAlign:"center", headerSort:false,
-                formatter:addAccountNumberToCell
+                formatter:tabultorHelper.addAccountNumberToCell
             },
             {
                 title:"Last ctd", field:"last_ctd", visible: false,
-                formatter:addAccountNumberToCell
+                formatter:tabultorHelper.addAccountNumberToCell
             },
             {
                 title:"Last efc", field:"last_efc", visible: false,
-                formatter:addAccountNumberToCell
+                formatter:tabultorHelper.addAccountNumberToCell
             },
 
         ],
@@ -187,7 +85,10 @@
             if(data.styling == " bold"){
                 rowElement.style.fontWeight = "600"; //apply css change to row element
             }
-        }
+        },
+
+        
+
     });
 
     // Table Events http://tabulator.info/docs/5.1/events#cell
@@ -204,11 +105,97 @@
 
     // Data Into Table
     table.on("tableBuilt", function(){
+        // load data
         table.setData("/api/tabledata");
+        var headers = document.getElementsByClassName("tabulator-headers")[0];
+
+        var lastRow = document.querySelector('.tabulator-row:last-child');
+
+        window.onscroll = function() {
+            if (window.scrollY >= 39) {
+                headers.classList.add('sticky');
+                //headers.style["top"] = (window.scrollY - 38) +"px";
+            }
+            else {
+                headers.classList.remove('sticky');
+            }
+        };
     });
 
     // download
     //table.download("xlsx", "data.xlsx", {sheetName:"Costs"});
+
+    function downloadExcelSheet(){
+
+        table.download("xlsx", "data.xlsx",{
+            documentProcessing:function(workbook){
+                //workbook - sheetJS workbook object
+                //set some properties on the workbook file
+                
+                
+
+                var sheets = workbook.Sheets;
+                for (var sheetKey in sheets) {
+                    // skip loop if the property is from prototype
+                    if (!sheets.hasOwnProperty(sheetKey)) continue;
+
+                    var sheet = sheets[sheetKey];
+
+                    //var range = XLSX.utils.decode_range(sheet['!ref']);
+                    //console.log(range)
+
+                    sheets[sheetKey]['!cols'] = [];
+                    sheets[sheetKey]['!rows'] = [];
+
+                    sheets[sheetKey]['!cols'][2] =  {'width' : 15};
+                    sheets[sheetKey]['!cols'][3] =  {'width' : 15};
+                    sheets[sheetKey]['!cols'][7] =  {'width' : 15};
+                    sheets[sheetKey]['!cols'][9] =  {'width' : 15};
+                     
+                    for (var cellKey in sheet) {
+                        // skip loop if the property is from prototype
+                        if (!sheet.hasOwnProperty(cellKey) || cellKey == '!ref') continue;
+                        
+                        var cell = sheet[cellKey];
+
+                        var rowNumber = Number(cellKey.replace( /^\D+/g, ''));
+
+                        var boldWords = ["Total", "Grand Total"];
+                        if(boldWords.includes(cell.v)){
+                            sheets[sheetKey]['!rows'][rowNumber] = {'hpt': 12};
+                        }
+                        
+                        var style  = {
+                            font:{
+                                bold:true
+                            },
+                            border:{
+                                top:{
+                                     style: 'thin', color: 'FFCC00' 
+                                }
+                            }
+                        }
+                        sheets[sheetKey][cellKey].s = boldWords.includes(cell.v) ? style : {}
+                    }
+                }
+                //console.log(XLSX.utils.sheet_to_json(workbook.Sheets.Sheet1, {header:1}))
+
+                console.log(sheets)
+
+                workbook.Props = {
+                    Title: "Cost Report",
+                    Subject: "Producation Cost",
+                    CreatedDate: new Date()
+                };
+                //workbook.SheetNames=['costs'];
+                return workbook;
+            }
+        });
+        
+    }
+    
+
+
 
 </script>
 

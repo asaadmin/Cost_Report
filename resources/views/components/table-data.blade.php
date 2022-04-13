@@ -1,6 +1,6 @@
 <div class="container-fluid"  style="margin-top:0px;">
 
-    <table class="raw_cost_table">
+    <table id="export_table_style" class="raw_cost_table">
         <thead>
             <tr class="tableHead">
                 <th>Account Number</th>
@@ -24,7 +24,7 @@
         <tbody>
 
             @foreach($data['rows'] as $row)
-                <tr class="{{ $row['styling'] }}">
+                <tr class="{{ $row['styling'] }}" data-condition="{{ $row['condition'] }}">
                     <td>{{ $row["acct_"] }}</td>
                     <td>{{ $row["description"] }}</td>
                     <td>{{ $row["period_cost"] }}</td>
@@ -48,3 +48,7 @@
     </table>
 
 </div>
+
+
+
+

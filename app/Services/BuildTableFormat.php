@@ -114,8 +114,8 @@ class BuildTableFormat
                             $out["totals"]["budget_ATL"] = $out["totals"]["budget_ATL"]  + $getCost['budget'];
                             $out["totals"]["approved_overage_ATL"] = $out["totals"]["approved_overage_ATL"]  + $getCost['approved_overage'];
                             $out["totals"]["total_budget_ATL"] =  $out["totals"]["total_budget_ATL"]  + $getCost['total_budget'];
-                            $out["totals"]["variance_ATL"] = $out["totals"]["variance_ATL"]  + $getCost['over_under'];
-                            $out["totals"]["over_under_ATL"] = $out["totals"]["over_under_ATL"]  + $getCost['variance'];
+                            $out["totals"]["over_under_ATL"] = $out["totals"]["over_under_ATL"] + $getCost['over_under'];
+                            $out["totals"]["variance_ATL"] = $out["totals"]["variance_ATL"] + $getCost['variance'];
                         break;
                     // Below the lin - total
                     case 'BTL':
@@ -128,8 +128,8 @@ class BuildTableFormat
                             $out["totals"]["budget_BTL"] = $out["totals"]["budget_BTL"]  + $getCost['budget'];
                             $out["totals"]["approved_overage_BTL"] = $out["totals"]["approved_overage_BTL"]  + $getCost['approved_overage'];
                             $out["totals"]["total_budget_BTL"] =  $out["totals"]["total_budget_BTL"]  + $getCost['total_budget'];
-                            $out["totals"]["variance_BTL"] = $out["totals"]["variance_BTL"]  + $getCost['over_under'];
-                            $out["totals"]["over_under_BTL"] = $out["totals"]["over_under_BTL"]  + $getCost['variance'];
+                            $out["totals"]["over_under_BTL"] = $out["totals"]["over_under_BTL"]  + $getCost['over_under'];
+                            $out["totals"]["variance_BTL"] = $out["totals"]["variance_BTL"]  + $getCost['variance'];
                         break;
                     // Producation total
                     case 'Post':
@@ -142,8 +142,8 @@ class BuildTableFormat
                             $out["totals"]["budget_Post"] = $out["totals"]["budget_Post"]  + $getCost['budget'];
                             $out["totals"]["approved_overage_Post"] = $out["totals"]["approved_overage_Post"]  + $getCost['approved_overage'];
                             $out["totals"]["total_budget_Post"] =  $out["totals"]["total_budget_Post"]  + $getCost['total_budget'];
-                            $out["totals"]["variance_Post"] = $out["totals"]["variance_Post"]  + $getCost['over_under'];
-                            $out["totals"]["over_under_Post"] = $out["totals"]["over_under_Post"]  + $getCost['variance'];
+                            $out["totals"]["over_under_Post"] = $out["totals"]["over_under_Post"]  + $getCost['over_under'];
+                            $out["totals"]["variance_Post"] = $out["totals"]["variance_Post"]  + $getCost['variance'];
                         break;
                     // other/ general total
                     case 'Other':
@@ -156,8 +156,8 @@ class BuildTableFormat
                             $out["totals"]["budget_Other"] = $out["totals"]["budget_Other"] + $getCost['budget'];
                             $out["totals"]["approved_overage_Other"] = $out["totals"]["approved_overage_Other"]  + $getCost['approved_overage'];
                             $out["totals"]["total_budget_Other"] =  $out["totals"]["total_budget_Other"]  + $getCost['total_budget'];
-                            $out["totals"]["variance_Other"] = $out["totals"]["variance_Other"]  + $getCost['over_under'];
-                            $out["totals"]["over_under_Other"] = $out["totals"]["over_under_Other"]  + $getCost['variance'];
+                            $out["totals"]["over_under_Other"] = $out["totals"]["over_under_Other"]  + $getCost['over_under'];
+                            $out["totals"]["variance_Other"] = $out["totals"]["variance_Other"]  + $getCost['variance'];
                         break;
                 }
 
@@ -171,8 +171,8 @@ class BuildTableFormat
                 $out["totals"]["budget_sub"] = $out["totals"]["budget_sub"] + $getCost['budget'];
                 $out["totals"]["approved_overage_sub"] = $out["totals"]["approved_overage_sub"] + $getCost['approved_overage'];
                 $out["totals"]["total_budget_sub"] =  $out["totals"]["total_budget_sub"] + $getCost['total_budget'];
-                $out["totals"]["variance_sub"] = $out["totals"]["variance_sub"] + $getCost['variance'];
                 $out["totals"]["over_under_sub"] = $out["totals"]["over_under_sub"] + $getCost['over_under'];
+                $out["totals"]["variance_sub"] = $out["totals"]["variance_sub"] + $getCost['variance'];
 
                 // Grand Total
                 $out["totals"]["period_cost_Grand"] =$out["totals"]["period_cost_Grand"] + $getCost['period_cost'];
@@ -184,8 +184,8 @@ class BuildTableFormat
                 $out["totals"]["budget_Grand"] = $out["totals"]["budget_Grand"] + $getCost['budget'];
                 $out["totals"]["approved_overage_Grand"] = $out["totals"]["approved_overage_Grand"] + $getCost['approved_overage'];
                 $out["totals"]["total_budget_Grand"] =  $out["totals"]["total_budget_Grand"] + $getCost['total_budget'];
-                $out["totals"]["variance_Grand"] = $out["totals"]["variance_Grand"] + $getCost['over_under'];
-                $out["totals"]["over_under_Grand"] = $out["totals"]["over_under_Grand"] + $getCost['variance'];
+                $out["totals"]["over_under_Grand"] = $out["totals"]["over_under_Grand"] + $getCost['over_under'];
+                $out["totals"]["variance_Grand"] = $out["totals"]["variance_Grand"] + $getCost['variance'];
             }
             $out['rows'][$i] =[];
             // end cost not empty
@@ -320,20 +320,20 @@ class BuildTableFormat
             // condition row 5
             else if($format->account==1 || $format->category!=0)
             {
-                $out['rows'][$i]  = [
-                    "condition"      => "condition_5",
+                $out['rows'][$i] = [
+                    "condition"     => "condition_5",
                     "format_id"     => $format->id,
                     "cost_id"       => $getCost['id'],
-                    "acct_"          => $format->account_no,
+                    "acct_"         => $format->account_no,
                     "producation"   => $format->producation,
-                    "description"    => $format->description,
-                    "period_cost"    => $getCost['period_cost'],
-                    "cost_to_date_"  => $getCost["cost_to_date"],
-                    "pos_"           => $getCost["pos"],
-                    "total_costs"    => $getCost["total_costs"],
-                    "etc"            => $getCost["etc"],
-                    "efc"            => $getCost["efc"],
-                    "budget"         => $getCost["budget"],
+                    "description"   => $format->description,
+                    "period_cost"   => $getCost['period_cost'],
+                    "cost_to_date_" => $getCost["cost_to_date"],
+                    "pos_"          => $getCost["pos"],
+                    "total_costs"   => $getCost["total_costs"],
+                    "etc"           => $getCost["etc"],
+                    "efc"           => $getCost["efc"],
+                    "budget"        => $getCost["budget"],
                     "approved_overage"  => $getCost["approved_overage"],
                     "total_budget"   => $getCost["total_budget"],
                     "over_under"     => $getCost["over_under"],

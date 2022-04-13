@@ -95,9 +95,10 @@ class FileUpload extends Controller
     {
         foreach($rows as $row)
         {
+            if(!isset($row["Account Number"])) { continue; }
             Format::create([
                 "forder" =>  $row["Order"],
-				"account_no" =>  $row["Account Num"],
+				"account_no" =>  $row["Account Number"],
 				"description" => $row["Account Description"],
 				"heading" => $row["heading"],
 				"account" => $row["account"],

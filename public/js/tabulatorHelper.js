@@ -1,1 +1,454 @@
-tabultorHelper={formatNumber:function(e,t,a,n){e=(e+"").replace(/[^0-9+\-Ee.]/g,"");var i=isFinite(+e)?+e:0,r=isFinite(+t)?Math.abs(t):0,o=void 0===n?",":n,u=void 0===a?".":a,c="";return c=(r?function(e,t){var a=Math.pow(10,t);return""+Math.round(e*a)/a}(i,r):""+Math.round(i)).split("."),c[0].length>3&&(c[0]=c[0].replace(/\B(?=(?:\d{3})+(?!\d))/g,o)),(c[1]||"").length<r&&(c[1]=c[1]||"",c[1]+=new Array(r-c[1].length+1).join("0")),c.join(u)},etcEditor:function(e,t,a,n){if("condition_1"!=e.getData().condition&&"condition_2"!=e.getData().condition&&"condition_3"!=e.getData().condition){input=document.createElement("input"),input.style.padding="4px",input.style.width="100%",input.style.boxSizing="border-box";var i=e.getValue(),r=e.getData();return input.value=i,t((function(){input.focus(),input.style.height="100%"})),input.addEventListener("blur",o),input.addEventListener("keydown",(function(e){13==e.keyCode&&o(),27==e.keyCode&&n()})),input}function o(){if(input.value!=i){a(input.value);var t=Number(r.total_costs)+Number(input.value),o=t-Number(r.budget),u=t-parseFloat(r.last_efc);e.getRow().update({efc:t,over_under:o,variance:u});var c=table.searchData([{field:"condition",type:"=",value:"condition_4"},{field:"collectCategory",type:"=",value:r.collectCategory}]),d=0,l=0,v=0,p=0;c.forEach((function(e){d+=Number(e.etc),l+=Number(e.efc),v+=Number(e.over_under),p+=Number(e.variance)}));var b=table.searchData([{field:"category_id",type:"=",value:r.collectCategory}])[0];table.updateData([{id:b.id,etc:d,efc:l,over_under:v,variance:p}]);var f=table.searchData([{field:"has_prodcuation_total",type:"=",value:b.has_prodcuation_total}]),s=0,_=0,h=0,m=0;f.forEach((function(e){s+=Number(e.etc),_+=Number(e.efc),h+=Number(e.over_under),m+=Number(e.variance)}));var y=table.searchData([{field:"is_producation_total",type:"=",value:b.has_prodcuation_total}])[0];table.updateData([{id:y.id,etc:s,efc:_,over_under:h,variance:m}]);var g=table.searchData([{field:"is_producation_total",type:"!=",value:""}]),N=0,D=0,E=0,C=0;g.forEach((function(e){N+=Number(e.etc),D+=Number(e.efc),E+=Number(e.over_under),C+=Number(e.variance)}));var w=table.searchData([{field:"condition",type:"=",value:"grand_total"}])[0];table.updateData([{id:w.id,etc:N,efc:D,over_under:E,variance:C}])}else n()}},efcEditor:function(e,t,a,n){if("condition_1"!=e.getData().condition&&"condition_2"!=e.getData().condition&&"condition_3"!=e.getData().condition){input=document.createElement("input"),input.style.padding="4px",input.style.width="100%",input.style.boxSizing="border-box";var i=e.getValue(),r=e.getData(),o=e.getRow();return input.value=i,t((function(){input.focus(),input.style.height="100%"})),input.addEventListener("blur",u),input.addEventListener("keydown",(function(e){13==e.keyCode&&u(),27==e.keyCode&&n()})),input}function u(){if(input.value!=i){a(input.value);var e=parseFloat(input.value)-parseFloat(r.total_costs),t=Number(input.value)-Number(r.budget),u=Number(input.value)-Number(r.last_efc);o.update({etc:e,over_under:t,variance:u});var c=table.searchData([{field:"condition",type:"=",value:"condition_4"},{field:"collectCategory",type:"=",value:r.collectCategory}]),d=0,l=0,v=0,p=0;c.forEach((function(e){d+=Number(e.etc),l+=Number(e.efc),v+=Number(e.over_under),p+=Number(e.variance)}));var b=table.searchData([{field:"category_id",type:"=",value:r.collectCategory}])[0];table.updateData([{id:b.id,etc:d,efc:l,over_under:v,variance:p}]).then((function(){}));var f=table.searchData([{field:"has_prodcuation_total",type:"=",value:b.has_prodcuation_total}]),s=0,_=0,h=0,m=0;f.forEach((function(e){s+=Number(e.etc),_+=Number(e.efc),h+=Number(e.over_under),m+=Number(e.variance)}));var y=table.searchData([{field:"is_producation_total",type:"=",value:b.has_prodcuation_total}])[0];table.updateData([{id:y.id,etc:s,efc:_,over_under:h,variance:m}]);var g=table.searchData([{field:"is_producation_total",type:"!=",value:""}]),N=0,D=0,E=0,C=0;g.forEach((function(e){N+=Number(e.etc),D+=Number(e.efc),E+=Number(e.over_under),C+=Number(e.variance)}));var w=table.searchData([{field:"condition",type:"=",value:"grand_total"}])[0];table.updateData([{id:w.id,etc:N,efc:D,over_under:E,variance:C}])}else n()}}};
+/******/ (() => { // webpackBootstrap
+var __webpack_exports__ = {};
+/*!*****************************************!*\
+  !*** ./resources/js/tabulatorHelper.js ***!
+  \*****************************************/
+tabultorHelper = {
+  formatNumber: function formatNumber(number, decimals, dec_point, thousands_sep) {
+    number = (number + '').replace(/[^0-9+\-Ee.]/g, '');
+
+    var n = !isFinite(+number) ? 0 : +number,
+        prec = !isFinite(+decimals) ? 0 : Math.abs(decimals),
+        sep = typeof thousands_sep === 'undefined' ? ',' : thousands_sep,
+        dec = typeof dec_point === 'undefined' ? '.' : dec_point,
+        s = '',
+        toFixedFix = function toFixedFix(n, prec) {
+      var k = Math.pow(10, prec);
+      return '' + Math.round(n * k) / k;
+    };
+
+    s = (prec ? toFixedFix(n, prec) : '' + Math.round(n)).split('.');
+
+    if (s[0].length > 3) {
+      s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep);
+    }
+
+    if ((s[1] || '').length < prec) {
+      s[1] = s[1] || '';
+      s[1] += new Array(prec - s[1].length + 1).join('0');
+    }
+
+    return s.join(dec);
+  },
+  etcEditor: function etcEditor(cell, onRendered, success, cancel) {
+    var conditionRowsToAvoid = ["condition_1", "condition_2", "condition_3", "condition_4", "grand_total"]; // Rows blocked
+
+    if (conditionRowsToAvoid.indexOf(cell.getData().condition) > -1) {
+      return;
+    }
+
+    input = document.createElement("input");
+    input.style.padding = "4px";
+    input.style.width = "100%";
+    input.style.boxSizing = "border-box"; // do formatting here
+
+    var cellValue = cell.getValue();
+    var sameRowdata = cell.getData();
+    input.value = cellValue; // render input field
+
+    onRendered(function () {
+      input.focus();
+      input.style.height = "100%";
+    });
+
+    function onChange() {
+      if (input.value != cellValue) {
+        success(input.value);
+        var efc = Number(sameRowdata.total_costs) + Number(input.value);
+        var under = efc - Number(sameRowdata.budget);
+        var variance = efc - parseFloat(sameRowdata.last_efc); // over under
+
+        var row = cell.getRow();
+        row.update({
+          "efc": efc,
+          "over_under": under,
+          "variance": variance
+        }); // Update category total
+
+        var rowsToBeSumed = table.searchData([{
+          field: "condition",
+          type: "=",
+          value: "condition_5"
+        }, {
+          field: "collectCategory",
+          type: "=",
+          value: sameRowdata.collectCategory
+        }]);
+        var categoryEtcSum = 0,
+            categoryEfCSum = 0,
+            categoryOverUnderSum = 0,
+            categoryVarianceSum = 0;
+        rowsToBeSumed.forEach(function (row) {
+          categoryEtcSum += Number(row.etc);
+          categoryEfCSum += Number(row.efc);
+          categoryOverUnderSum += Number(row.over_under);
+          categoryVarianceSum += Number(row.variance);
+        });
+        var rowsToBeUpdate = table.searchData([{
+          field: "category_id",
+          type: "=",
+          value: sameRowdata.collectCategory
+        }])[0];
+        table.updateData([{
+          id: rowsToBeUpdate.id,
+          etc: categoryEtcSum,
+          efc: categoryEfCSum,
+          over_under: categoryOverUnderSum,
+          variance: categoryVarianceSum
+        }]); // Producation total -> ATL, BTL, Post, General
+
+        var prodTotals = table.searchData([{
+          field: "has_prodcuation_total",
+          type: "=",
+          value: rowsToBeUpdate.has_prodcuation_total
+        }]);
+        var prodEtcSum = 0,
+            prodEfCSum = 0,
+            prodOverUnderSum = 0,
+            prodVarianceSum = 0;
+        prodTotals.forEach(function (row) {
+          prodEtcSum += Number(row.etc);
+          prodEfCSum += Number(row.efc);
+          prodOverUnderSum += Number(row.over_under);
+          prodVarianceSum += Number(row.variance);
+        });
+        var prodToBeUpdate = table.searchData([{
+          field: "is_producation_total",
+          type: "=",
+          value: rowsToBeUpdate.has_prodcuation_total
+        }])[0];
+        table.updateData([{
+          id: prodToBeUpdate.id,
+          etc: prodEtcSum,
+          efc: prodEfCSum,
+          over_under: prodOverUnderSum,
+          variance: prodVarianceSum
+        }]); // Grand Total
+
+        var getAllTheProductionTotal = table.searchData([{
+          field: "is_producation_total",
+          type: "!=",
+          value: ""
+        }]);
+        var grandEtcSum = 0,
+            grandEfCSum = 0,
+            grandOverUnderSum = 0,
+            grandVarianceSum = 0;
+        getAllTheProductionTotal.forEach(function (row) {
+          grandEtcSum += Number(row.etc);
+          grandEfCSum += Number(row.efc);
+          grandOverUnderSum += Number(row.over_under);
+          grandVarianceSum += Number(row.variance);
+        });
+        var grandTotalUpdate = table.searchData([{
+          field: "condition",
+          type: "=",
+          value: "grand_total"
+        }])[0];
+        table.updateData([{
+          id: grandTotalUpdate.id,
+          etc: grandEtcSum,
+          efc: grandEfCSum,
+          over_under: grandOverUnderSum,
+          variance: grandVarianceSum
+        }]);
+      } else {
+        cancel();
+      }
+    } //submit new value on blur or change
+
+
+    input.addEventListener("blur", onChange); //submit new value on enter
+
+    input.addEventListener("keydown", function (e) {
+      if (e.keyCode == 13) {
+        onChange();
+      }
+
+      if (e.keyCode == 27) {
+        cancel();
+      }
+    });
+    return input;
+  },
+  efcEditor: function efcEditor(cell, onRendered, success, cancel) {
+    var conditionRowsToAvoid = ["condition_1", "condition_2", "condition_3", "condition_4", "grand_total"]; // Rows blocked
+
+    if (conditionRowsToAvoid.indexOf(cell.getData().condition) > -1) {
+      return;
+    }
+
+    input = document.createElement("input");
+    input.style.padding = "4px";
+    input.style.width = "100%";
+    input.style.boxSizing = "border-box";
+    var cellValue = cell.getValue();
+    var sameRowdata = cell.getData();
+    var row = cell.getRow();
+    input.value = cellValue; // render input field
+
+    onRendered(function () {
+      input.focus();
+      input.style.height = "100%";
+    });
+
+    function onChange() {
+      if (input.value != cellValue) {
+        success(input.value); // over under
+
+        var etc = parseFloat(input.value) - parseFloat(sameRowdata.total_costs);
+        var under = Number(input.value) - Number(sameRowdata.budget);
+        var variance = Number(input.value) - Number(sameRowdata.last_efc);
+        row.update({
+          "etc": etc,
+          "over_under": under,
+          "variance": variance
+        }); // Update category total
+
+        var rowsToBeSumed = table.searchData([{
+          field: "condition",
+          type: "=",
+          value: "condition_5"
+        }, {
+          field: "collectCategory",
+          type: "=",
+          value: sameRowdata.collectCategory
+        }]);
+        console.log(rowsToBeSumed);
+        var categoryEtcSum = 0,
+            categoryEfCSum = 0,
+            categoryOverUnderSum = 0,
+            categoryVarianceSum = 0;
+        rowsToBeSumed.forEach(function (row) {
+          categoryEtcSum += Number(row.etc);
+          categoryEfCSum += Number(row.efc);
+          categoryOverUnderSum += Number(row.over_under);
+          categoryVarianceSum += Number(row.variance);
+        });
+        var rowsToBeUpdate = table.searchData([{
+          field: "category_id",
+          type: "=",
+          value: sameRowdata.collectCategory
+        }])[0];
+        table.updateData([{
+          id: rowsToBeUpdate.id,
+          etc: categoryEtcSum,
+          efc: categoryEfCSum,
+          over_under: categoryOverUnderSum,
+          variance: categoryVarianceSum
+        }]).then(function () {}); // producation total
+        // Producation total -> ATL, BTL, Post, General
+
+        var prodTotals = table.searchData([{
+          field: "has_prodcuation_total",
+          type: "=",
+          value: rowsToBeUpdate.has_prodcuation_total
+        }]);
+        var prodEtcSum = 0,
+            prodEfCSum = 0,
+            prodOverUnderSum = 0,
+            prodVarianceSum = 0;
+        prodTotals.forEach(function (row) {
+          prodEtcSum += Number(row.etc);
+          prodEfCSum += Number(row.efc);
+          prodOverUnderSum += Number(row.over_under);
+          prodVarianceSum += Number(row.variance);
+        });
+        var prodToBeUpdate = table.searchData([{
+          field: "is_producation_total",
+          type: "=",
+          value: rowsToBeUpdate.has_prodcuation_total
+        }])[0];
+        table.updateData([{
+          id: prodToBeUpdate.id,
+          etc: prodEtcSum,
+          efc: prodEfCSum,
+          over_under: prodOverUnderSum,
+          variance: prodVarianceSum
+        }]); // Grand Total
+
+        var getAllTheProductionTotal = table.searchData([{
+          field: "is_producation_total",
+          type: "!=",
+          value: ""
+        }]);
+        var grandEtcSum = 0,
+            grandEfCSum = 0,
+            grandOverUnderSum = 0,
+            grandVarianceSum = 0;
+        getAllTheProductionTotal.forEach(function (row) {
+          grandEtcSum += Number(row.etc);
+          grandEfCSum += Number(row.efc);
+          grandOverUnderSum += Number(row.over_under);
+          grandVarianceSum += Number(row.variance);
+        });
+        var grandTotalUpdate = table.searchData([{
+          field: "condition",
+          type: "=",
+          value: "grand_total"
+        }])[0];
+        table.updateData([{
+          id: grandTotalUpdate.id,
+          etc: grandEtcSum,
+          efc: grandEfCSum,
+          over_under: grandOverUnderSum,
+          variance: grandVarianceSum
+        }]);
+      } else {
+        cancel();
+      }
+    } //submit new value on blur or change
+
+
+    input.addEventListener("blur", onChange); //submit new value on enter
+
+    input.addEventListener("keydown", function (e) {
+      if (e.keyCode == 13) {
+        onChange();
+      }
+
+      if (e.keyCode == 27) {
+        cancel();
+      }
+    });
+    return input;
+  },
+  addAccountNumberToCell: function addAccountNumberToCell(cell, formatterParams, onRendered) {
+    //cell - the cell component
+    //formatterParams - parameters set for the column
+    //onRendered - function to call when the formatter has been rendered
+    //var cell = $("#example-table").tabulator("getRow", 24).getCell("name");
+    //$("#example-table").tabulator("getRow", 24).update({name:"steve");
+    //var data = table.getData();
+    //console.log(data)
+    var sameRowdata = cell.getData();
+    var row = cell.getRow();
+    var coloum = cell.getColumn();
+    var currentElement = cell.getElement();
+    onRendered(function () {
+      if (sameRowdata.condition == 'condition_3') {
+        row.getElement().style.border = '1px solid #000000';
+
+        switch (coloum.getField()) {
+          case 'total_costs':
+            currentElement.setAttribute('id', "total_costs_" + sameRowdata.cat_num);
+            break;
+
+          case 'etc':
+            currentElement.setAttribute('id', "total_etc_" + sameRowdata.cat_num);
+            break;
+
+          case 'efc':
+            currentElement.setAttribute('id', "total_efc_" + sameRowdata.cat_num);
+            break;
+
+          case 'over_under':
+            currentElement.setAttribute('id', "total_over_" + sameRowdata.cat_num);
+            break;
+
+          case 'variance':
+            currentElement.setAttribute('id', "total_variance_" + sameRowdata.cat_num);
+            break;
+        } // row.update({"account_no": ""});
+
+      }
+
+      if (sameRowdata.condition == 'condition_4') {
+        row.getElement().style.border = '1px solid #000000';
+        row.getElement().style.fontWeight = '600';
+
+        switch (coloum.getField()) {
+          case 'total_costs':
+            currentElement.setAttribute('id', "total_costs_" + sameRowdata.account_no);
+            break;
+
+          case 'etc':
+            currentElement.setAttribute('id', "total_" + sameRowdata.production);
+            break;
+
+          case 'efc':
+            currentElement.setAttribute('id', "total_" + sameRowdata.production);
+            break;
+
+          case 'over_under':
+            currentElement.setAttribute('id', "over_" + sameRowdata.account_no);
+            break;
+
+          case 'variance':
+            currentElement.setAttribute('id', "variance_" + sameRowdata.account_no);
+            break;
+        }
+      }
+
+      if (sameRowdata.condition == 'condition_5') {
+        switch (coloum.getField()) {
+          case 'total_costs':
+            currentElement.setAttribute('id', "total_costs_" + sameRowdata.account_no);
+            break;
+
+          case 'etc':
+            currentElement.setAttribute('id', "etc_" + sameRowdata.account_no);
+            currentElement.classList.add("etc_" + sameRowdata.production);
+            currentElement.classList.add("etc_" + sameRowdata.cat_num);
+            break;
+
+          case 'efc':
+            currentElement.setAttribute('id', "efc_" + sameRowdata.account_no);
+            currentElement.classList.add("efc_" + sameRowdata.production);
+            currentElement.classList.add("efc_" + sameRowdata.cat_num);
+            break;
+
+          case 'budget':
+            currentElement.setAttribute('id', "budget_" + sameRowdata.account_no);
+            currentElement.classList.add("budget_" + sameRowdata.production);
+            currentElement.classList.add("budget_" + sameRowdata.cat_num);
+            break;
+
+          case 'over_under':
+            currentElement.setAttribute('id', "over_" + sameRowdata.account_no);
+            currentElement.classList.add("over_" + sameRowdata.production);
+            currentElement.classList.add("over_" + sameRowdata.cat_num);
+            break;
+
+          case 'variance':
+            currentElement.setAttribute('id', "variance_" + sameRowdata.account_no);
+            currentElement.classList.add("variance_" + sameRowdata.production);
+            currentElement.classList.add("variance_" + sameRowdata.cat_num);
+            break;
+        }
+      }
+
+      if (sameRowdata.condition == 'grand_total') {
+        row.getElement().style.border = '1px solid #000000';
+        row.getElement().style.fontWeight = '600';
+      }
+    });
+    return cell.getValue();
+  },
+  tableToExcel: function tableToExcel(tableID, fileName) {
+    // Define your style class template.
+    var style = "<style>thead{font-weight: bold; color: #000;} th{border: none; color: black;font-weight: bold;} .bold{ font-weight: bold;} .borderTopAndBottom {border-top: 1px solid #000; border-bottom: 1px solid #000;}.borderDoubleTopBottom {border-top: 3px double #000;border-bottom: 3px double #000;} .borderTop {  border-top: 1px solid #000; } .borderDoubleTop{border-top: 3px double #000;}</style>";
+    var uri = 'data:application/vnd.ms-excel;base64,';
+    var template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]-->' + style + '</head><body><table>{table}</table></body></html>';
+
+    var base64 = function base64(s) {
+      return window.btoa(unescape(encodeURIComponent(s)));
+    };
+
+    var format = function format(s, c) {
+      return s.replace(/{(\w+)}/g, function (m, p) {
+        return c[p];
+      });
+    };
+
+    if (!tableID.nodeType) table = document.getElementById(tableID);
+    var ctx = {
+      worksheet: fileName || 'Worksheet',
+      table: table.innerHTML
+    };
+    window.location.href = uri + base64(format(template, ctx));
+    return;
+  }
+};
+/******/ })()
+;

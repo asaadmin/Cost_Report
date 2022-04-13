@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\FileUpload;
+use App\Http\Controllers\EditCost;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,9 +20,8 @@ use App\Http\Controllers\FileUpload;
 Route::get('/', [FileUpload::class, 'index']);
 
 Route::post('/fileupload', [FileUpload::class, 'saveFile'])->name("saveFile");
-Route::get('/editdata', function () {
-    return view('pages.tabulator');
-})->name("editdata");
+Route::get('/editdata', [EditCost::class, 'index'])->name("editdata");
+
 
 Route::get('/export', [FileUpload::class, 'export'])->name("export");
 Route::get('/reset', [FileUpload::class, 'reset'])->name("reset");
