@@ -3,17 +3,15 @@
     <head>
         @include('partials.head')
     </head>
-    <body>
-        <div class="container">
-        <header class="row">
-            @include('partials.header')
-        </header>
-        <div id="main" class="row">
-                @yield('content')
-        </div>
-        <footer class="row">
-            @include('partials.footer')
-        </footer>
-        </div>
+    <body class="">
+            <header>
+                @include('partials.header')
+            </header>
+            <div>
+                    @yield('content')
+            </div>
+            <footer>
+                @include('partials.footer')
+            </footer>
     </body>
 </html>

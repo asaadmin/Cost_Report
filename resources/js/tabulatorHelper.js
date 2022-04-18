@@ -65,6 +65,15 @@ tabultorHelper = {
                     "efc": efc,
                     "over_under": under,
                     "variance": variance,
+                }).then(function(){
+                    $.ajax({
+                        type:'PUT',
+                        url:"/updaterow",
+                        data:sameRowdata,
+                        success:function(data){
+                           console.log('row updated')
+                        }
+                     });
                 });
 
                 // Update category total

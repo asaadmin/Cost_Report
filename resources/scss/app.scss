@@ -1,5 +1,16 @@
 @import "normalize.css";
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+header{
+    position: fixed;
+    width: 100%;
+    top:0;
+    z-index: 2;
+}
+
 .raw_cost_table {
     border-collapse: collapse;
     border: 1px solid #000;
@@ -44,6 +55,7 @@
 /* Tabultor table */
 
 #cost-table.tabulator{
+  margin-top: 59px;
 	transform: none!important;
 }
 .tabulator-headers{
@@ -73,7 +85,8 @@
     left: 0;
     right: 0;
     width: 100%;
-    z-index: 1;
+    z-index: 2;
+    margin-top: 59px;
     .tabulator-col{
 		background-color: #FFFFFF!important;
 		border: 1px solid #000000;

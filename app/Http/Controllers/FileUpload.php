@@ -38,16 +38,6 @@ class FileUpload extends Controller
         return redirect('/editdata');
     }
 
-    public function export()
-    {
-        $sheets = new SheetCollection([
-            "Costs" => Cost::all()->makeHidden(['created_at','updated_at', 'sessionID' ]),
-            "Formats" => Format::all()->makeHidden(['created_at','updated_at', 'sessionID' ])
-        ]);
-        (new FastExcel($sheets))->export('file.xlsx');
-        return response()->download('file.xlsx');
-    }
-
 
     public function reset()
     {

@@ -1,9 +1,6 @@
 @extends('layouts.default')
 @section('content')
 
-    <a class="button-42" style="max-width:80px;" href="{{route('reset')}}">Reset</a>
-    <a class="button-42" style="max-width:100px; display:none;" href="#" onclick="downloadExcelSheet()">Download</a>
-
     <div id="cost-table" class="cost-table"></div>
 
     <script>
@@ -112,7 +109,7 @@
         var lastRow = document.querySelector('.tabulator-row:last-child');
 
         window.onscroll = function() {
-            if (window.scrollY >= 39) {
+            if (window.scrollY >= 60) {
                 headers.classList.add('sticky');
                 //headers.style["top"] = (window.scrollY - 38) +"px";
             }
@@ -189,7 +186,8 @@
                 };
                 //workbook.SheetNames=['costs'];
                 return workbook;
-            }
+            },
+            style:true
         });
         
     }
