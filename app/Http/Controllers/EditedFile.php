@@ -10,7 +10,7 @@ use Rap2hpoutre\FastExcel\FastExcel;
 use Rap2hpoutre\FastExcel\SheetCollection;
 
 
-class Editedfile extends Controller
+class EditedFile extends Controller
 {
 
     public function index()

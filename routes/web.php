@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\FileUpload;
 use App\Http\Controllers\EditCost;
-use App\Http\Controllers\Editedfile;
+use App\Http\Controllers\EditedFile;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,8 +27,8 @@ Route::get('/reupload', [FileUpload::class, 'reset'])->name("reupload");
 Route::get('/api/tabledata', [FileUpload::class, 'tabledata'])->name("tabledata");
 Route::get('/api/cleartables', [FileUpload::class, 'truncate'])->name("cleartables");
 
-Route::get('/save', [Editedfile::class, 'save'])->name("save");
-Route::put('/updaterow', [Editedfile::class, 'updateCostRow'])->name("updaterow");
+Route::get('/save', [EditedFile::class, 'save'])->name("save");
+Route::put('/updaterow', [EditedFile::class, 'updateCostRow'])->name("updaterow");
 
 
 
