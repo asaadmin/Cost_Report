@@ -22,6 +22,7 @@ Route::get('/', [FileUpload::class, 'index'])->name('home');
 
 Route::post('/fileupload', [FileUpload::class, 'saveFile'])->name("saveFile");
 Route::get('/editdata', [EditCost::class, 'index'])->name("editdata");
+Route::get('/tableView', [FileUpload::class, 'tableView'])->name("tableView");
 
 Route::get('/reupload', [FileUpload::class, 'reset'])->name("reupload");
 Route::get('/api/tabledata', [FileUpload::class, 'tabledata'])->name("tabledata");

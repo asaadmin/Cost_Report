@@ -23,8 +23,4 @@ class EditCost extends Controller
         }
     }
 
-    public function truncate()
-    {
-    }
-
 }

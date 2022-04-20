@@ -17,8 +17,8 @@
                     <a href="{{route('reupload')}}" class="{{ (request()->is('reupload')) ? 'border-b-4' : '' }} py-4 px-2 text-black-500 border-red-600 font-semibold">
                         Reupload
                     </a>
-                    <a href="{{route('home')}}" class="{{ (request()->is('home')) ? 'border-b-4' : '' }} py-4 px-2 text-black-500 border-red-600 font-semibold">
-                        Upload
+                    <a href="{{route('tableView')}}" class="{{ (request()->is('tableView')) ? 'border-b-4' : '' }} py-4 px-2 text-black-500 border-red-600 font-semibold">
+                        Table View
                     </a>
                     <a href="{{route('save')}}" class="{{ (request()->is('save')) ? 'border-b-4' : '' }} py-4 px-2 text-black-500 font-semibold hover:text-red-600 transition duration-300">
                         Save
@@ -55,8 +55,8 @@
                             </a>
                         </li>
                         <li class=""> 
-                            <a href="{{route('home')}}" class="block text-sm px-2 py-4 text-white bg-purple-500 font-semibold">
-                                Upload
+                            <a href="{{route('tableView')}}" class="block text-sm px-2 py-4 text-white bg-purple-500 font-semibold">
+                                Table View
                             </a>
                         </li>
                         <li>
@@ -79,4 +79,6 @@
         menu.classList.toggle("hidden");
     })
 </script>
+
+
 

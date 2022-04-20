@@ -1,15 +1,6 @@
 @extends('layouts.default')
 @section('content')
 
-
-@if(!$costs->isEmpty())
-
-    <x-table-data :data="$tableData">
-
-    </x-table-data>
-
-@else
-
     <div class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center py-4 sm:pt-0">
         <form action="{{route('saveFile')}}" method="post" enctype="multipart/form-data">
           <h2 class="text-center mb-5">Upload excel file</h2>
@@ -56,7 +47,6 @@
             
         </form>
     </div>
-@endif
 
 @stop
 

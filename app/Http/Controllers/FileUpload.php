@@ -19,14 +19,7 @@ class FileUpload extends Controller
         // excel-files/CrUu6C8PfCp70Wgz5pvhof9A476GcR3vZ54zdvfF.xlsx
         //$sheets = (new FastExcel)->importSheets(storage_path('app/excel-files/CrUu6C8PfCp70Wgz5pvhof9A476GcR3vZ54zdvfF.xlsx'));
         //dd($sheets[1]);
-
-        $tableData = (new BuildTableFormat())->fixData();
-
-        return view('pages.home', [
-            "costs" => Cost::where('sessionID', Session::getId())->get(),
-            "formats" => Format::where('sessionID', Session::getId())->get(),
-            "tableData" => $tableData
-        ]);
+        return view('pages.home', []);
     }
 
     public function saveFile(Request $request)
@@ -36,6 +29,20 @@ class FileUpload extends Controller
         $this->insertCosts($sheets[0]);
         $this->insertFormat($sheets[1]);
         return redirect('/editdata');
+    }
+
+    public function tableView()
+    {
+        $tableData = (new BuildTableFormat())->fixData();
+        $costs =  Cost::where('sessionID', Session::getId())->get();
+
+        if($costs->isEmpty()){
+            return redirect('/');
+        }
+        return view('pages.tableView', [
+            "costs" => Cost::where('sessionID', Session::getId())->get(),
+            "tableData" => $tableData
+        ]);
     }
 
 
