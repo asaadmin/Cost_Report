@@ -4,6 +4,8 @@
 @tailwind components;
 @tailwind utilities;
 
+$backgroundColor:#f00;
+
 header{
     position: fixed;
     width: 100%;
@@ -55,43 +57,63 @@ header{
 /* Tabultor table */
 
 #cost-table.tabulator{
-  margin-top: 59px;
-	transform: none!important;
-}
-.tabulator-headers{
-
-}
-.tabulator-tableholder{
-	
-	.tabulator-table{
-		position:relative;
-		.tabulator-row{
-
-			&:last-child{
-				position: fixed;
-    			bottom: 0;
-				background-color: #fff;
-				border: 1px solid #000000;
-			}
-		}
-
-	}
-
-}
-
-.tabulator-headers.sticky{
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    width: 100%;
-    z-index: 2;
     margin-top: 59px;
-    .tabulator-col{
-		background-color: #FFFFFF!important;
-		border: 1px solid #000000;
-	}
+	transform: none!important;
+
+    .tabulator-header{
+
+        .tabulator-headers.sticky{
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            width: 100%;
+            z-index: 2;
+            margin-top: 59px;
+            .tabulator-col{
+                background-color: #FFFFFF!important;
+                border: 1px solid #000000;
+            }
+        }
+
+    }
+
+    .tabulator-tableholder{
+        
+        .tabulator-table{
+            position:relative;
+            margin-bottom: 16px;
+            .tabulator-row{
+                .tabulator-cell{
+                    border-right: none;
+                    background-color: #FFFFFF;
+                }
+
+                &:last-child{
+                    position: fixed;
+                    bottom: 0;
+                    background-color: #fff;
+                    border: 1px solid #000000;
+                }
+            }
+            .tabulator-selectable{
+
+            }
+            .tabulator-row-odd{
+
+            }
+            .tabulator-row-even{
+
+            }
+    
+        }
+    
+    }
 }
+
+
+
+
 
 
 div.cost-table {

@@ -29,6 +29,7 @@ Route::get('/api/cleartables', [FileUpload::class, 'truncate'])->name("cleartabl
 
 Route::get('/save', [EditedFile::class, 'save'])->name("save");
 Route::put('/updaterow', [EditedFile::class, 'updateCostRow'])->name("updaterow");
+Route::get('/template', [EditedFile::class, 'templateFile'])->name("template");
 
 
 

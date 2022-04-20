@@ -1,4 +1,4 @@
-<div class="container-fluid"  style="margin-top:0px;">
+<div  style="margin-top:6%;">
 
     <table id="export_table_style" class="raw_cost_table">
         <thead>
@@ -47,7 +47,10 @@
         </tbody>
     </table>
 
+    <button type="button" onclick="tabultorHelper.tableToExcel('export_table_style', 'tableExcel.xlsx')">Download</button>
+
 </div>
+
 
 
 

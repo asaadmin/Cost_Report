@@ -553,9 +553,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 .border-solid{
   border-style: solid;
 }
-.border-purple-500{
+.border-red-600{
   --tw-border-opacity: 1;
-  border-color: rgb(168 85 247 / var(--tw-border-opacity));
+  border-color: rgb(220 38 38 / var(--tw-border-opacity));
 }
 .border-gray-200{
   --tw-border-opacity: 1;
@@ -629,6 +629,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 .text-center{
   text-align: center;
 }
+.text-xl{
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+}
 .text-sm{
   font-size: 0.875rem;
   line-height: 1.25rem;
@@ -656,9 +660,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 .tracking-wider{
   letter-spacing: 0.05em;
 }
-.text-gray-500{
+.text-red-600{
   --tw-text-opacity: 1;
-  color: rgb(107 114 128 / var(--tw-text-opacity));
+  color: rgb(220 38 38 / var(--tw-text-opacity));
 }
 .text-white{
   --tw-text-opacity: 1;
@@ -675,6 +679,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 .text-gray-400{
   --tw-text-opacity: 1;
   color: rgb(156 163 175 / var(--tw-text-opacity));
+}
+.text-gray-500{
+  --tw-text-opacity: 1;
+  color: rgb(107 114 128 / var(--tw-text-opacity));
 }
 .text-gray-600{
   --tw-text-opacity: 1;
@@ -782,18 +790,7 @@ header {
   margin-top: 59px;
   transform: none !important;
 }
-
-.tabulator-tableholder .tabulator-table {
-  position: relative;
-}
-.tabulator-tableholder .tabulator-table .tabulator-row:last-child {
-  position: fixed;
-  bottom: 0;
-  background-color: #fff;
-  border: 1px solid #000000;
-}
-
-.tabulator-headers.sticky {
+#cost-table.tabulator .tabulator-header .tabulator-headers.sticky {
   position: fixed;
   top: 0;
   left: 0;
@@ -802,11 +799,24 @@ header {
   z-index: 2;
   margin-top: 59px;
 }
-.tabulator-headers.sticky .tabulator-col {
+#cost-table.tabulator .tabulator-header .tabulator-headers.sticky .tabulator-col {
   background-color: #FFFFFF !important;
   border: 1px solid #000000;
 }
-
+#cost-table.tabulator .tabulator-tableholder .tabulator-table {
+  position: relative;
+  margin-bottom: 16px;
+}
+#cost-table.tabulator .tabulator-tableholder .tabulator-table .tabulator-row .tabulator-cell {
+  border-right: none;
+  background-color: #FFFFFF;
+}
+#cost-table.tabulator .tabulator-tableholder .tabulator-table .tabulator-row:last-child {
+  position: fixed;
+  bottom: 0;
+  background-color: #fff;
+  border: 1px solid #000000;
+}
 div.cost-table {
   height: 900px;
   border: 1px solid black;
@@ -899,9 +909,9 @@ div.cost-table {
   background-color: rgb(29 78 216 / var(--tw-bg-opacity));
 }
 
-.hover\:text-purple-500:hover{
+.hover\:text-red-600:hover{
   --tw-text-opacity: 1;
-  color: rgb(168 85 247 / var(--tw-text-opacity));
+  color: rgb(220 38 38 / var(--tw-text-opacity));
 }
 
 .hover\:shadow-lg:hover{

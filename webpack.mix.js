@@ -1,6 +1,7 @@
 const mix = require('laravel-mix');
 const tailwindcss = require('tailwindcss');
 
+mix.disableNotifications();
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
@@ -13,7 +14,6 @@ const tailwindcss = require('tailwindcss');
  */
 
 mix.js('resources/js/app.js', 'public/js')
-.js('resources/js/tabulatorHelper.js', 'public/js')
 .sass('resources/scss/app.scss', 'public/css')
 .options({
     postCss: [ tailwindcss('./tailwind.config.js') ],

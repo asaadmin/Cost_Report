@@ -8,6 +8,9 @@ use Session;
 use Illuminate\Support\Facades\Storage;
 use Rap2hpoutre\FastExcel\FastExcel;
 use Rap2hpoutre\FastExcel\SheetCollection;
+use Box\Spout\Common\Entity\Style\Style;
+use Box\Spout\Common\Entity\Style\Color;
+use Box\Spout\Common\Entity\Style\CellAlignment;
 
 
 class EditedFile extends Controller
@@ -15,7 +18,13 @@ class EditedFile extends Controller
 
     public function index()
     {
+        echo "hello";
+        return;
+    }
 
+    public function templateFile()
+    {
+        return response()->download('uploadfileTemplate.xlsx');
     }
 
     public function updateCostRow(Request $request)
@@ -35,9 +44,20 @@ class EditedFile extends Controller
             "Costs" => Cost::where('sessionID', Session::getId())->select($this->_costSheetHeader())->get(),
             "Formats" => Format::where('sessionID', Session::getId())->select($this->_formatSheetHeader())->get()
         ]);
-
-        (new FastExcel($sheets))->export('savedFile.xlsx');
+        $style = (new Style())
+        ->setBackgroundColor(Color::YELLOW)
+        ->setCellAlignment(CellAlignment::CENTER)
+        ->setShouldWrapText(true)
+        ->setFontBold(true)
+        ;
+        (new FastExcel($sheets))->headerStyle($style)->export('savedFile.xlsx');
         return response()->download('savedFile.xlsx');
+    }
+
+    //https://opensource.box.com/spout/docs/#new-sheet-creation
+    public function styleExamples(Type $var = null)
+    {
+
     }
 
     public function _costSheetHeader()
@@ -78,6 +98,5 @@ class EditedFile extends Controller
 			"height_percent AS height %",
         ];
     }
-
 
 }

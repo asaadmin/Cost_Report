@@ -212,6 +212,15 @@ tabultorHelper = {
           "etc": etc,
           "over_under": under,
           "variance": variance
+        }).then(function () {
+          $.ajax({
+            type: 'PUT',
+            url: "/updaterow",
+            data: sameRowdata,
+            success: function success(data) {
+              console.log('row updated');
+            }
+          });
         }); // Update category total
 
         var rowsToBeSumed = table.searchData([{
@@ -336,8 +345,6 @@ tabultorHelper = {
     var currentElement = cell.getElement();
     onRendered(function () {
       if (sameRowdata.condition == 'condition_3') {
-        row.getElement().style.border = '1px solid #000000';
-
         switch (coloum.getField()) {
           case 'total_costs':
             currentElement.setAttribute('id', "total_costs_" + sameRowdata.cat_num);
@@ -346,93 +353,16 @@ tabultorHelper = {
           case 'etc':
             currentElement.setAttribute('id', "total_etc_" + sameRowdata.cat_num);
             break;
-
-          case 'efc':
-            currentElement.setAttribute('id', "total_efc_" + sameRowdata.cat_num);
-            break;
-
-          case 'over_under':
-            currentElement.setAttribute('id', "total_over_" + sameRowdata.cat_num);
-            break;
-
-          case 'variance':
-            currentElement.setAttribute('id', "total_variance_" + sameRowdata.cat_num);
-            break;
-        } // row.update({"account_no": ""});
-
-      }
-
-      if (sameRowdata.condition == 'condition_4') {
-        row.getElement().style.border = '1px solid #000000';
-        row.getElement().style.fontWeight = '600';
-
-        switch (coloum.getField()) {
-          case 'total_costs':
-            currentElement.setAttribute('id', "total_costs_" + sameRowdata.account_no);
-            break;
-
-          case 'etc':
-            currentElement.setAttribute('id', "total_" + sameRowdata.production);
-            break;
-
-          case 'efc':
-            currentElement.setAttribute('id', "total_" + sameRowdata.production);
-            break;
-
-          case 'over_under':
-            currentElement.setAttribute('id', "over_" + sameRowdata.account_no);
-            break;
-
-          case 'variance':
-            currentElement.setAttribute('id', "variance_" + sameRowdata.account_no);
-            break;
         }
-      }
-
-      if (sameRowdata.condition == 'condition_5') {
-        switch (coloum.getField()) {
-          case 'total_costs':
-            currentElement.setAttribute('id', "total_costs_" + sameRowdata.account_no);
-            break;
-
-          case 'etc':
-            currentElement.setAttribute('id', "etc_" + sameRowdata.account_no);
-            currentElement.classList.add("etc_" + sameRowdata.production);
-            currentElement.classList.add("etc_" + sameRowdata.cat_num);
-            break;
-
-          case 'efc':
-            currentElement.setAttribute('id', "efc_" + sameRowdata.account_no);
-            currentElement.classList.add("efc_" + sameRowdata.production);
-            currentElement.classList.add("efc_" + sameRowdata.cat_num);
-            break;
-
-          case 'budget':
-            currentElement.setAttribute('id', "budget_" + sameRowdata.account_no);
-            currentElement.classList.add("budget_" + sameRowdata.production);
-            currentElement.classList.add("budget_" + sameRowdata.cat_num);
-            break;
-
-          case 'over_under':
-            currentElement.setAttribute('id', "over_" + sameRowdata.account_no);
-            currentElement.classList.add("over_" + sameRowdata.production);
-            currentElement.classList.add("over_" + sameRowdata.cat_num);
-            break;
-
-          case 'variance':
-            currentElement.setAttribute('id', "variance_" + sameRowdata.account_no);
-            currentElement.classList.add("variance_" + sameRowdata.production);
-            currentElement.classList.add("variance_" + sameRowdata.cat_num);
-            break;
-        }
-      }
-
-      if (sameRowdata.condition == 'grand_total') {
-        row.getElement().style.border = '1px solid #000000';
-        row.getElement().style.fontWeight = '600';
       }
     });
-    return cell.getValue();
+    var formatValue = cell.getValue();
+
+    if (coloum.getField() != 'account_no' || coloum.getField() != 'description') {
+      formatValue = Number(cell.getValue()).toLocaleString();
+    }
+
+    return formatValue;
   },
   tableToExcel: function tableToExcel(tableID, fileName) {
     // Define your style class template.

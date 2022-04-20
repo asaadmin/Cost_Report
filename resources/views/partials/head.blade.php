@@ -13,29 +13,14 @@
 <link href="https://unpkg.com/tabulator-tables@5.1.8/dist/css/tabulator.min.css" rel="stylesheet">
 
 
-
-<script  src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-
-<script type="text/javascript" src="{{ URL::asset('js/tabulatorHelper.js') }}"></script>
-<script type="text/javascript" src="https://unpkg.com/tabulator-tables@5.1.8/dist/js/tabulator.min.js"></script>
 <script type="text/javascript" src="https://oss.sheetjs.com/sheetjs/xlsx.full.min.js"></script>
-
+<!-- js xlsx style -->
 <script type="text/javascript" src="{{ URL::asset('dist/xlsx.bundle.js') }}"></script>
 
 
 <!-- Styles -->
 <link rel="stylesheet" href="{{ mix('css/app.css') }}">
 
-<!-- Scripts -->
+<!-- Scripts -- Check 'defer' -->
 <script src="{{ mix('js/app.js') }}" defer></script>
 
-
-<script type="text/javascript">
-
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
-
-</script>
