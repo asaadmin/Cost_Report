@@ -348,11 +348,11 @@ tabultorHelper = {
                         break;
                 }
             }
-
         });
 
         var formatValue = cell.getValue();
-        if(coloum.getField() != 'account_no' || coloum.getField() != 'description'  ){
+        
+        if( (coloum.getField() != 'account_no' || coloum.getField() != 'description') && (cell.getValue() != "") ){
             formatValue = Number(cell.getValue()).toLocaleString();
         }
         return formatValue;
