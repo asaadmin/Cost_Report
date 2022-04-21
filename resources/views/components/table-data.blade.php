@@ -25,21 +25,21 @@
 
             @foreach($data['rows'] as $row)
                 <tr class="{{ $row['styling'] }}" data-condition="{{ $row['condition'] }}">
-                    <td>{{ $row["acct_"] }}</td>
-                    <td>{{ $row["description"] }}</td>
-                    <td>{{ $row["period_cost"] }}</td>
-                    <td>{{ $row["cost_to_date_"] }}</td>
-                    <td>{{ $row["pos_"] }}</td>
-                    <td>{{ $row["total_costs"] }}</td>
-                    <td>{{ $row["etc"] }}</td>
-                    <td>{{ $row["efc"] }}</td>
-                    <td>{{ $row["budget"] }}</td>
-                    <td>{{ $row["approved_overage"] }}</td>
-                    <td>{{ $row["total_budget"] }}</td>
-                    <td>{{ $row["over_under"] }}</td>
-                    <td>{{ $row["variance"] }}</td>
-                    <td>{{ $row["last_ctd"] }}</td>
-                    <td>{{ $row["last_efc"] }}</td>
+                    <td class="text-left"> {{ $row["acct_"] }}</td>
+                    <td class="text-left"> {{ $row["description"] }}</td>
+                    <td class="text-right"> {{ $row["period_cost"] }}</td>
+                    <td class="text-right"> {{ $row["cost_to_date_"] }}</td>
+                    <td class="text-right"> {{ $row["pos_"] }}</td>
+                    <td class="text-right"> {{ $row["total_costs"] }}</td>
+                    <td class="text-right"> {{ $row["etc"] }}</td>
+                    <td class="text-right"> {{ $row["efc"] }}</td>
+                    <td class="text-right"> {{ $row["budget"] }}</td>
+                    <td class="text-right"> {{ $row["approved_overage"] }}</td>
+                    <td class="text-right"> {{ $row["total_budget"] }}</td>
+                    <td class="text-right"> {{ $row["over_under"] }}</td>
+                    <td class="text-right"> {{ $row["variance"] }}</td>
+                    <td class="text-right"> {{ $row["last_ctd"] }}</td>
+                    <td class="text-right"> {{ $row["last_efc"] }}</td>
                 </tr>
 
             @endforeach

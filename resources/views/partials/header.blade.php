@@ -11,7 +11,7 @@
                     <a href="{{route('editdata')}}" class="{{ (request()->is('editdata')) ? 'border-b-4' : '' }} py-4 px-2 text-black-500 border-red-600 font-semibold">
                         Editing
                     </a>
-                    <a href="#" onclick="downloadExcelSheet()" class="py-4 px-2 text-black-500 border-red-600 font-semibold">
+                    <a href="{{route('report')}}" class="py-4 px-2 text-black-500 border-red-600 font-semibold">
                         Report
                     </a>
                     <a href="{{route('reupload')}}" class="{{ (request()->is('reupload')) ? 'border-b-4' : '' }} py-4 px-2 text-black-500 border-red-600 font-semibold">
@@ -20,7 +20,7 @@
                     <a href="{{route('tableView')}}" class="{{ (request()->is('tableView')) ? 'border-b-4' : '' }} py-4 px-2 text-black-500 border-red-600 font-semibold">
                         Table View
                     </a>
-                    <a href="{{route('save')}}" class="{{ (request()->is('save')) ? 'border-b-4' : '' }} py-4 px-2 text-black-500 font-semibold hover:text-red-600 transition duration-300">
+                    <a href="{{route('save')}}" class=" py-4 px-2 text-black-500 font-semibold hover:text-red-600 transition duration-300">
                         Save
                     </a>
                     <a href="{{route('template')}}" class="{{ (request()->is('template')) ? 'border-b-4' : '' }} py-4 px-2 text-black-500 font-semibold hover:text-red-600 transition duration-300">

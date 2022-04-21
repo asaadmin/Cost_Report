@@ -3,8 +3,8 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\FileUpload;
-use App\Http\Controllers\EditCost;
 use App\Http\Controllers\EditedFile;
+use App\Http\Controllers\FormatExcel;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,7 +21,7 @@ use App\Http\Controllers\EditedFile;
 Route::get('/', [FileUpload::class, 'index'])->name('home');
 
 Route::post('/fileupload', [FileUpload::class, 'saveFile'])->name("saveFile");
-Route::get('/editdata', [EditCost::class, 'index'])->name("editdata");
+Route::get('/editdata', [EditedFile::class, 'index'])->name("editdata");
 Route::get('/tableView', [FileUpload::class, 'tableView'])->name("tableView");
 
 Route::get('/reupload', [FileUpload::class, 'reset'])->name("reupload");
@@ -31,6 +31,9 @@ Route::get('/api/cleartables', [FileUpload::class, 'truncate'])->name("cleartabl
 Route::get('/save', [EditedFile::class, 'save'])->name("save");
 Route::put('/updaterow', [EditedFile::class, 'updateCostRow'])->name("updaterow");
 Route::get('/template', [EditedFile::class, 'templateFile'])->name("template");
+
+// report formated excel
+Route::get('/report', [FormatExcel::class, 'index'])->name("report");
 
 
 

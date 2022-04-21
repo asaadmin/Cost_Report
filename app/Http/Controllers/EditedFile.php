@@ -8,9 +8,11 @@ use Session;
 use Illuminate\Support\Facades\Storage;
 use Rap2hpoutre\FastExcel\FastExcel;
 use Rap2hpoutre\FastExcel\SheetCollection;
+
 use Box\Spout\Common\Entity\Style\Style;
 use Box\Spout\Common\Entity\Style\Color;
 use Box\Spout\Common\Entity\Style\CellAlignment;
+
 
 
 class EditedFile extends Controller
@@ -18,8 +20,16 @@ class EditedFile extends Controller
 
     public function index()
     {
-        echo "hello";
-        return;
+        $costs = Cost::where('sessionID', Session::getId());
+        $formats = Format::where('sessionID', Session::getId());
+
+        if( ($costs->count() > 0) && ($formats->count() > 0) ){
+            return view('pages.tabulator');
+        }else{
+            $costs->delete();
+            $formats->delete();
+            return redirect("/");
+        }
     }
 
     public function templateFile()
@@ -52,12 +62,6 @@ class EditedFile extends Controller
         ;
         (new FastExcel($sheets))->headerStyle($style)->export('savedFile.xlsx');
         return response()->download('savedFile.xlsx');
-    }
-
-    //https://opensource.box.com/spout/docs/#new-sheet-creation
-    public function styleExamples(Type $var = null)
-    {
-
     }
 
     public function _costSheetHeader()
