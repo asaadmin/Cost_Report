@@ -33,7 +33,7 @@ class FormatExcel extends Controller
         $row = WriterEntityFactory::createRowFromArray($this->_costSheetHeader());
         $writer->addRow($row);
 
-        //Oh, figured it out--just added this line to WorksheetManager.php, startSheet(), between the header and the data:
+        //Oh, figured it out--just added this line to Box\Spout\Writer\XLSX\Manager\WorksheetManager.php, startSheet(), between the header and the data:
         //fwrite($sheetFilePointer, '<cols><col min="1" max="1" width="30" customWidth="1"/><col min="2" max="6" width="30" customWidth="1"/></cols>');
         // echo number_format('1000', 0, ".", ",")
 
@@ -92,6 +92,17 @@ class FormatExcel extends Controller
            $var = number_format($var, 0, ".", ",");
         }
         return $var;
+    }
+
+    public function _colWidths()
+    {
+        $out = "<cols>";
+        foreach($this->_costSheetHeader() as $header)
+        {
+            $out .= '<col min="1" max="1" width="30" customWidth="1"/>';
+        }
+        $out .= "<cols>";
+        return $out;
     }
 
     public function _costSheetHeader()

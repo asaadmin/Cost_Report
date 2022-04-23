@@ -450,6 +450,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 .-mt-px{
   margin-top: -1px;
 }
+.mt-3{
+  margin-top: 0.75rem;
+}
 .mb-5{
   margin-bottom: 1.25rem;
 }
@@ -462,8 +465,8 @@ Ensure the default browser behavior of the `hidden` attribute.
 .mt-5{
   margin-top: 1.25rem;
 }
-.mt-3{
-  margin-top: 0.75rem;
+.mb-4{
+  margin-bottom: 1rem;
 }
 .block{
   display: block;
@@ -501,9 +504,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 .h-16{
   height: 4rem;
 }
-.h-12{
-  height: 3rem;
-}
 .min-h-screen{
   min-height: 100vh;
 }
@@ -519,14 +519,11 @@ Ensure the default browser behavior of the `hidden` attribute.
 .w-auto{
   width: auto;
 }
-.w-96{
-  width: 24rem;
-}
 .w-full{
   width: 100%;
 }
-.w-12{
-  width: 3rem;
+.w-96{
+  width: 24rem;
 }
 .max-w-6xl{
   max-width: 72rem;
@@ -534,8 +531,8 @@ Ensure the default browser behavior of the `hidden` attribute.
 .max-w-xl{
   max-width: 36rem;
 }
-.flex-shrink-0{
-  flex-shrink: 0;
+.border-collapse{
+  border-collapse: collapse;
 }
 .translate-y-4{
   --tw-translate-y: 1rem;
@@ -547,6 +544,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .transform{
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+.list-disc{
+  list-style-type: disc;
 }
 .grid-cols-1{
   grid-template-columns: repeat(1, minmax(0, 1fr));
@@ -579,17 +579,14 @@ Ensure the default browser behavior of the `hidden` attribute.
 .overflow-y-auto{
   overflow-y: auto;
 }
-.rounded{
-  border-radius: 0.25rem;
-}
 .rounded-lg{
   border-radius: 0.5rem;
 }
-.rounded-full{
-  border-radius: 9999px;
-}
 .rounded-md{
   border-radius: 0.375rem;
+}
+.rounded{
+  border-radius: 0.25rem;
 }
 .border{
   border-width: 1px;
@@ -614,40 +611,40 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-border-opacity: 1;
   border-color: rgb(229 231 235 / var(--tw-border-opacity));
 }
+.border-transparent{
+  border-color: transparent;
+}
 .border-gray-300{
   --tw-border-opacity: 1;
   border-color: rgb(209 213 219 / var(--tw-border-opacity));
+}
+.border-slate-400{
+  --tw-border-opacity: 1;
+  border-color: rgb(148 163 184 / var(--tw-border-opacity));
+}
+.border-slate-300{
+  --tw-border-opacity: 1;
+  border-color: rgb(203 213 225 / var(--tw-border-opacity));
 }
 .border-gray-400{
   --tw-border-opacity: 1;
   border-color: rgb(156 163 175 / var(--tw-border-opacity));
 }
-.border-transparent{
-  border-color: transparent;
+.border-red-300{
+  --tw-border-opacity: 1;
+  border-color: rgb(252 165 165 / var(--tw-border-opacity));
 }
 .bg-white{
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
 }
-.bg-purple-500{
-  --tw-bg-opacity: 1;
-  background-color: rgb(168 85 247 / var(--tw-bg-opacity));
-}
 .bg-gray-100{
   --tw-bg-opacity: 1;
   background-color: rgb(243 244 246 / var(--tw-bg-opacity));
 }
-.bg-blue-600{
-  --tw-bg-opacity: 1;
-  background-color: rgb(37 99 235 / var(--tw-bg-opacity));
-}
 .bg-gray-500{
   --tw-bg-opacity: 1;
   background-color: rgb(107 114 128 / var(--tw-bg-opacity));
-}
-.bg-red-100{
-  --tw-bg-opacity: 1;
-  background-color: rgb(254 226 226 / var(--tw-bg-opacity));
 }
 .bg-gray-50{
   --tw-bg-opacity: 1;
@@ -657,6 +654,18 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-bg-opacity: 1;
   background-color: rgb(220 38 38 / var(--tw-bg-opacity));
 }
+.bg-green-400{
+  --tw-bg-opacity: 1;
+  background-color: rgb(74 222 128 / var(--tw-bg-opacity));
+}
+.bg-red-100{
+  --tw-bg-opacity: 1;
+  background-color: rgb(254 226 226 / var(--tw-bg-opacity));
+}
+.bg-blue-600{
+  --tw-bg-opacity: 1;
+  background-color: rgb(37 99 235 / var(--tw-bg-opacity));
+}
 .bg-opacity-75{
   --tw-bg-opacity: 0.75;
 }
@@ -665,6 +674,12 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .p-6{
   padding: 1.5rem;
+}
+.p-2{
+  padding: 0.5rem;
+}
+.p-4{
+  padding: 1rem;
 }
 .px-4{
   padding-left: 1rem;
@@ -682,6 +697,14 @@ Ensure the default browser behavior of the `hidden` attribute.
   padding-left: 1.5rem;
   padding-right: 1.5rem;
 }
+.py-3{
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+}
+.py-2{
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
 .px-3{
   padding-left: 0.75rem;
   padding-right: 0.75rem;
@@ -694,13 +717,9 @@ Ensure the default browser behavior of the `hidden` attribute.
   padding-top: 0.25rem;
   padding-bottom: 0.25rem;
 }
-.py-2{
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-}
-.py-3{
-  padding-top: 0.75rem;
-  padding-bottom: 0.75rem;
+.px-14{
+  padding-left: 3.5rem;
+  padding-right: 3.5rem;
 }
 .pt-8{
   padding-top: 2rem;
@@ -748,20 +767,20 @@ Ensure the default browser behavior of the `hidden` attribute.
 .font-semibold{
   font-weight: 600;
 }
+.font-medium{
+  font-weight: 500;
+}
 .font-normal{
   font-weight: 400;
 }
-.font-medium{
-  font-weight: 500;
+.font-bold{
+  font-weight: 700;
 }
 .uppercase{
   text-transform: uppercase;
 }
 .leading-7{
   line-height: 1.75rem;
-}
-.leading-6{
-  line-height: 1.5rem;
 }
 .tracking-wider{
   letter-spacing: 0.05em;
@@ -864,20 +883,20 @@ Ensure the default browser behavior of the `hidden` attribute.
 .duration-300{
   transition-duration: 300ms;
 }
-.duration-150{
-  transition-duration: 150ms;
-}
 .duration-200{
   transition-duration: 200ms;
 }
-.ease-in-out{
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+.duration-150{
+  transition-duration: 150ms;
 }
 .ease-out{
   transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
 }
 .ease-in{
   transition-timing-function: cubic-bezier(0.4, 0, 1, 1);
+}
+.ease-in-out{
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 header {
   position: fixed;
@@ -1036,14 +1055,18 @@ div.cost-table {
   box-shadow: rgba(253, 76, 0, 0.5) 0 3px 8px;
 }
 
+.hover\:border-b-4:hover{
+  border-bottom-width: 4px;
+}
+
+.hover\:border-red-700:hover{
+  --tw-border-opacity: 1;
+  border-color: rgb(185 28 28 / var(--tw-border-opacity));
+}
+
 .hover\:bg-purple-500:hover{
   --tw-bg-opacity: 1;
   background-color: rgb(168 85 247 / var(--tw-bg-opacity));
-}
-
-.hover\:bg-blue-700:hover{
-  --tw-bg-opacity: 1;
-  background-color: rgb(29 78 216 / var(--tw-bg-opacity));
 }
 
 .hover\:bg-red-700:hover{
@@ -1054,6 +1077,11 @@ div.cost-table {
 .hover\:bg-gray-50:hover{
   --tw-bg-opacity: 1;
   background-color: rgb(249 250 251 / var(--tw-bg-opacity));
+}
+
+.hover\:bg-blue-700:hover{
+  --tw-bg-opacity: 1;
+  background-color: rgb(29 78 216 / var(--tw-bg-opacity));
 }
 
 .hover\:text-red-600:hover{
@@ -1098,15 +1126,15 @@ div.cost-table {
   outline-offset: 2px;
 }
 
-.focus\:ring-0:focus{
-  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
-  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(0px + var(--tw-ring-offset-width)) var(--tw-ring-color);
-  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
-}
-
 .focus\:ring-2:focus{
   --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
   --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
+}
+
+.focus\:ring-0:focus{
+  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(0px + var(--tw-ring-offset-width)) var(--tw-ring-color);
   box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
 }
 
@@ -1167,21 +1195,14 @@ div.cost-table {
     margin-top: 2rem;
     margin-bottom: 2rem;
   }
-  .sm\:mx-0{
-    margin-left: 0px;
-    margin-right: 0px;
-  }
   .sm\:ml-0{
     margin-left: 0px;
   }
-  .sm\:mt-0{
-    margin-top: 0px;
-  }
-  .sm\:ml-4{
-    margin-left: 1rem;
-  }
   .sm\:ml-3{
     margin-left: 0.75rem;
+  }
+  .sm\:mt-0{
+    margin-top: 0px;
   }
   .sm\:block{
     display: block;
@@ -1198,17 +1219,11 @@ div.cost-table {
   .sm\:h-screen{
     height: 100vh;
   }
-  .sm\:h-10{
-    height: 2.5rem;
+  .sm\:w-auto{
+    width: auto;
   }
   .sm\:w-full{
     width: 100%;
-  }
-  .sm\:w-10{
-    width: 2.5rem;
-  }
-  .sm\:w-auto{
-    width: auto;
   }
   .sm\:max-w-lg{
     max-width: 32rem;
@@ -1229,9 +1244,6 @@ div.cost-table {
   }
   .sm\:flex-row-reverse{
     flex-direction: row-reverse;
-  }
-  .sm\:items-start{
-    align-items: flex-start;
   }
   .sm\:items-center{
     align-items: center;

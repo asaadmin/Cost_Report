@@ -1,26 +1,31 @@
 @extends('layouts.default')
 @section('content')
 
-    <div class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center py-4 sm:pt-0">
+    @if ($message = Session::get('fileUploaded'))
+        <x-previewModal></x-previewModal>
+    @endif
+
+    <div class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 items-center py-4 sm:pt-0">
         <form action="{{route('saveFile')}}" method="post" enctype="multipart/form-data">
           <h2 class="text-center mb-5">Upload excel file</h2>
             @csrf
             @if ($message = Session::get('success'))
-            <div class="alert alert-success">
+            <div class="bg-green-400">
                 <strong>{{ $message }}</strong>
             </div>
-          @endif
-          @if (count($errors) > 0)
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                      <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-          @endif
+            @endif
 
-            <div class="flex justify-center">
+            @if (count($errors) > 0)
+                <div class="bg-red-100">
+                    <ul class="list-disc">
+                        @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
+            <div class="flex justify-center items-center">
                 <div class="mb-3 w-96">
                     <label for="formFile" class="form-label inline-block mb-2 text-gray-700">Select Excel File</label>
                     <input class="form-control

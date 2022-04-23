@@ -6,6 +6,8 @@ use App\Http\Controllers\FileUpload;
 use App\Http\Controllers\EditedFile;
 use App\Http\Controllers\FormatExcel;
 
+use App\Http\Controllers\Admin\ViewSession;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -34,6 +36,9 @@ Route::get('/template', [EditedFile::class, 'templateFile'])->name("template");
 
 // report formated excel
 Route::get('/report', [FormatExcel::class, 'index'])->name("report");
+
+
+Route::get('/sessions', [ViewSession::class, 'index'])->name("sessions");
 
 
 

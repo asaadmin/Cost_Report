@@ -15,22 +15,31 @@ class FileUpload extends Controller
 {
     public function index()
     {
-        //$session_id = Session::getId();
-        // excel-files/CrUu6C8PfCp70Wgz5pvhof9A476GcR3vZ54zdvfF.xlsx
-        //$sheets = (new FastExcel)->importSheets(storage_path('app/excel-files/CrUu6C8PfCp70Wgz5pvhof9A476GcR3vZ54zdvfF.xlsx'));
-        //dd($sheets[1]);
+        $costs =  Cost::where('sessionID', Session::getId())->get();
+        if($costs->count() > 0 && !Session::has('fileUploaded')){
+            return redirect('/editdata');
+        }
         return view('pages.home', []);
     }
 
+    // /fileupload
     public function saveFile(Request $request)
     {
-        $path = $request->file('file')->store('excel-files');
-        $sheets = (new FastExcel)->importSheets(storage_path('app/' . $path));
-        $this->insertCosts($sheets[0]);
-        $this->insertFormat($sheets[1]);
-        return redirect('/editdata');
+        $request->validate([
+            'file' => 'required|mimes:xlx,xls,xlsx'
+        ]);
+
+        if($request->file())
+        {
+            $path = $request->file('file')->store('excel-files');
+            $sheets = (new FastExcel)->importSheets(storage_path('app/' . $path));
+            $this->insertCosts($sheets[0]);
+            $this->insertFormat($sheets[1]);
+        }
+        return back()->with('fileUploaded', 'File Imported Successfully.');
     }
 
+    // /tableView
     public function tableView()
     {
         $tableData = (new BuildTableFormat())->fixData();
@@ -46,13 +55,15 @@ class FileUpload extends Controller
     }
 
 
+    // /reupload
     public function reset()
     {
         Cost::where('sessionID', Session::getId())->delete();
-        Format::Truncate('sessionID', Session::getId())->delete();
+        Format::where('sessionID', Session::getId())->delete();
         return redirect("/");
     }
 
+    // api/cleartables
     public function truncate()
     {
         Cost::Truncate();
