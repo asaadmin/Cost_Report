@@ -55,9 +55,7 @@ class EditedFile extends Controller
             "Formats" => Format::where('sessionID', Session::getId())->select($this->_formatSheetHeader())->get()
         ]);
         $style = (new Style())
-        ->setBackgroundColor(Color::YELLOW)
         ->setCellAlignment(CellAlignment::CENTER)
-        ->setShouldWrapText(true)
         ->setFontBold(true)
         ;
         (new FastExcel($sheets))->headerStyle($style)->export('savedFile.xlsx');
