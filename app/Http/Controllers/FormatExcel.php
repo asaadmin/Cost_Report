@@ -24,11 +24,12 @@ class FormatExcel extends Controller
 
     public function index()
     {
+        $filename = "report_".date('Y_m_d_h_s').".xlsx";
         $tableData = (new BuildTableFormat())->tableDataForTabulator();
 
         //$writer = WriterFactory::createFromType(Type::XLSX);
         $writer = WriterEntityFactory::createXLSXWriter();
-        $writer->openToFile('report.xlsx');
+        $writer->openToFile($filename);
 
         $row = WriterEntityFactory::createRowFromArray($this->_costSheetHeader());
         $writer->addRow($row);
@@ -81,9 +82,7 @@ class FormatExcel extends Controller
 
         
         $writer->close();
-
-        //(new FastExcel($sheets))->headerStyle($style)->export('savedFile.xlsx');
-        return response()->download('report.xlsx');
+        return response()->download($filename)->deleteFileAfterSend(true);
     }
 
     public static function formatNumber(&$v, $k)

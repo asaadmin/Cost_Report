@@ -14,7 +14,7 @@
                     <a href="{{route('editdata')}}" class="{{ (request()->is('editdata')) ? 'border-b-4' : '' }} hover:border-b-4 py-2 px-2 text-white border-secondary-blue font-semibold">
                         Edit
                     </a>
-                    <a href="{{route('tableView')}}" class=" hidden {{ (request()->is('tableView')) ? 'border-b-4' : '' }} hover:border-b-4 py-2 px-2 text-white border-secondary-blue font-semibold">
+                    <a href="{{route('tableView')}}" class=" {{ (request()->is('tableView')) ? 'border-b-4' : '' }} hover:border-b-4 py-2 px-2 text-white border-secondary-blue font-semibold">
                         Table View
                     </a>
                     <a href="{{route('report')}}" class="py-2 px-2 text-white hover:border-b-4 border-secondary-blue font-semibold">

@@ -50,6 +50,7 @@ class EditedFile extends Controller
 
     public function save()
     {
+        $filename = "save_".date('Y_m_d_h_s').".xlsx";
         $sheets = new SheetCollection([
             "Costs" => Cost::where('sessionID', Session::getId())->select($this->_costSheetHeader())->get(),
             "Formats" => Format::where('sessionID', Session::getId())->select($this->_formatSheetHeader())->get()
@@ -58,8 +59,8 @@ class EditedFile extends Controller
         ->setCellAlignment(CellAlignment::CENTER)
         ->setFontBold(true)
         ;
-        (new FastExcel($sheets))->headerStyle($style)->export('savedFile.xlsx');
-        return response()->download('savedFile.xlsx');
+        (new FastExcel($sheets))->headerStyle($style)->export($filename);
+        return response()->download($filename)->deleteFileAfterSend(true);
     }
 
     public function _costSheetHeader()
