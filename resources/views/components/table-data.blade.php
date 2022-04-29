@@ -2,7 +2,7 @@
 
     <table id="export_table_style" class="raw_cost_table">
         <thead>
-            <tr class="tableHead">
+            <tr class="tableHead bg-secondary-blue">
                 <th>Account Number</th>
                 <th>Account Description</th>
                 <th>Period Cost</th>

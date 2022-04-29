@@ -2080,47 +2080,57 @@ if (document.getElementById("cost-table")) {
   //Create Tabulator on DOM element with id "example-table"
   window.table = new tabulator_tables__WEBPACK_IMPORTED_MODULE_1__.TabulatorFull("#cost-table", {
     height: "100%",
+    //maxHeight:"100%",
     layout: "fitColumns",
+    //columnMinWidth:80,
     columnHeaderSortMulti: false,
     columns: [{
       title: "Account Number",
       field: "account_no",
       headerSort: false,
-      hozAlign: "left"
+      hozAlign: "left",
+      resizable: false
     }, {
       title: "Account Description",
       field: "description",
       headerSort: false,
-      hozAlign: "left"
+      hozAlign: "left",
+      resizable: false,
+      maxWidth: 200
     }, {
       title: "Period Cost",
       field: "period_cost",
       headerSort: false,
       hozAlign: "right",
+      resizable: false,
       formatter: tabultorHelper.addAccountNumberToCell
     }, {
       title: "Cost To Date",
       field: "cost_to_date",
       headerSort: false,
       hozAlign: "right",
+      resizable: false,
       formatter: tabultorHelper.addAccountNumberToCell
     }, {
       title: "Pos",
       field: "pos",
       headerSort: false,
       hozAlign: "right",
+      resizable: false,
       formatter: tabultorHelper.addAccountNumberToCell
     }, {
       title: "Total Costs",
       field: "total_costs",
       headerSort: false,
       hozAlign: "right",
+      resizable: false,
       formatter: tabultorHelper.addAccountNumberToCell
     }, {
       title: "ETC",
       field: "etc",
       hozAlign: "right",
       headerSort: false,
+      resizable: false,
       editor: tabultorHelper.etcEditor,
       formatter: tabultorHelper.addAccountNumberToCell
     }, {
@@ -2128,6 +2138,7 @@ if (document.getElementById("cost-table")) {
       field: "efc",
       hozAlign: "right",
       headerSort: false,
+      resizable: false,
       editor: tabultorHelper.efcEditor,
       formatter: tabultorHelper.addAccountNumberToCell
     }, {
@@ -2135,30 +2146,35 @@ if (document.getElementById("cost-table")) {
       field: "budget",
       hozAlign: "right",
       headerSort: false,
+      resizable: false,
       formatter: tabultorHelper.addAccountNumberToCell
     }, {
       title: "Approved Overage",
       field: "approved_overage",
       hozAlign: "right",
       headerSort: false,
+      resizable: false,
       formatter: tabultorHelper.addAccountNumberToCell
     }, {
       title: "Total Budget",
       field: "total_budget",
       hozAlign: "right",
       headerSort: false,
+      resizable: false,
       formatter: tabultorHelper.addAccountNumberToCell
     }, {
       title: "Over/(Under)",
       field: "over_under",
       hozAlign: "right",
       headerSort: false,
+      resizable: false,
       formatter: tabultorHelper.addAccountNumberToCell
     }, {
       title: "Variance",
       field: "variance",
       hozAlign: "right",
       headerSort: false,
+      resizable: false,
       formatter: tabultorHelper.addAccountNumberToCell
     }, {
       title: "Last ctd",
@@ -2210,85 +2226,17 @@ if (document.getElementById("cost-table")) {
   table.on("tableBuilt", function () {
     // load data
     table.setData("/api/tabledata");
-    var headers = document.getElementsByClassName("tabulator-headers")[0];
+    var headers = document.getElementsByClassName("tabulator-header")[0];
+    var stickyAfterScroll = headers.offsetTop;
 
-    window.onscroll = function () {
-      if (window.scrollY >= 60) {
+    function pinHeader() {
+      if (window.scrollY > 53) {
         headers.classList.add('sticky');
       } else {
         headers.classList.remove('sticky');
       }
-    };
-  });
-}
+    } //window.onscroll = function() {pinHeader()};
 
-function downloadExcelSheet() {
-  table.download("xlsx", "data.xlsx", {
-    documentProcessing: function documentProcessing(workbook) {
-      //workbook - sheetJS workbook object
-      //set some properties on the workbook file
-      var sheets = workbook.Sheets;
-
-      for (var sheetKey in sheets) {
-        // skip loop if the property is from prototype
-        if (!sheets.hasOwnProperty(sheetKey)) continue;
-        var sheet = sheets[sheetKey]; //var range = XLSX.utils.decode_range(sheet['!ref']);
-        //console.log(range)
-
-        sheets[sheetKey]['!cols'] = [];
-        sheets[sheetKey]['!rows'] = [];
-        sheets[sheetKey]['!cols'][2] = {
-          'width': 15
-        };
-        sheets[sheetKey]['!cols'][3] = {
-          'width': 15
-        };
-        sheets[sheetKey]['!cols'][7] = {
-          'width': 15
-        };
-        sheets[sheetKey]['!cols'][9] = {
-          'width': 15
-        };
-
-        for (var cellKey in sheet) {
-          // skip loop if the property is from prototype
-          if (!sheet.hasOwnProperty(cellKey) || cellKey == '!ref') continue;
-          var cell = sheet[cellKey];
-          var rowNumber = Number(cellKey.replace(/^\D+/g, ''));
-          var boldWords = ["Total", "Grand Total"];
-
-          if (boldWords.includes(cell.v)) {
-            sheets[sheetKey]['!rows'][rowNumber] = {
-              'hpt': 12
-            };
-          }
-
-          var style = {
-            font: {
-              bold: true
-            },
-            border: {
-              top: {
-                style: 'thin',
-                color: 'FFCC00'
-              }
-            }
-          };
-          sheets[sheetKey][cellKey].s = boldWords.includes(cell.v) ? style : {};
-        }
-      } //console.log(XLSX.utils.sheet_to_json(workbook.Sheets.Sheet1, {header:1}))
-
-
-      console.log(sheets);
-      workbook.Props = {
-        Title: "Cost Report",
-        Subject: "Producation Cost",
-        CreatedDate: new Date()
-      }; //workbook.SheetNames=['costs'];
-
-      return workbook;
-    },
-    style: true
   });
 }
 

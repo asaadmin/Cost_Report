@@ -9,7 +9,12 @@ module.exports = {
     container: {
       center: true,
     },
-    extend: {},
+    extend: {
+        colors: {
+            'primary-red': '#c81e1c',
+            'secondary-blue': "#79abd2"
+        },
+    },
   },
   plugins: [],
 }

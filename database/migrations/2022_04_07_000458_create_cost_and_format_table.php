@@ -37,8 +37,8 @@ class CreateCostAndFormatTable extends Migration
             $tableFormat->id();
             $tableFormat->string('sessionID');
             $tableFormat->integer('forder')->nullable();
-            $tableFormat->string('account_no');
-            $tableFormat->string('description');
+            $tableFormat->string('account_no')->nullable();
+            $tableFormat->string('description')->nullable();
             $tableFormat->integer('heading')->nullable();
             $tableFormat->integer('account')->nullable();
             $tableFormat->integer('category')->nullable();

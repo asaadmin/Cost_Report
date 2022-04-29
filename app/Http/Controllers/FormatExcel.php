@@ -38,7 +38,7 @@ class FormatExcel extends Controller
         // echo number_format('1000', 0, ".", ",")
 
         $styleMerger = new StyleMerger();
-        $removeCells = ['id', 'cost_id', 'condition', 'producation', 'styling', 'has_prodcuation_total', 'is_producation_total', 'collectCategory', 'category_id', 'cat_num'];
+        $removeCells = ['id', 'cost_id', 'condition', 'producation', 'styling', 'has_prodcuation_total', 'is_producation_total', 'collectCategory', 'category_id', 'cat_num', 'last_ctd', 'last_efc'];
 
         // need to build header
         foreach($tableData as $row){
@@ -63,14 +63,14 @@ class FormatExcel extends Controller
                 $borderBuilder->setBorderTop(Color::BLACK, Border::WIDTH_THICK, Border::STYLE_SOLID);
                 $borderBuilder->setBorderBottom(Color::BLACK, Border::WIDTH_THICK, Border::STYLE_SOLID);
             }
-            $style->setCellAlignment(CellAlignment::RIGHT)->setShouldWrapText(true);
+            $style->setCellAlignment(CellAlignment::RIGHT)->setShouldWrapText();
 
             $borderStyle = (new StyleBuilder())->setBorder($borderBuilder->build())->build();
             $styleMerger = (new StyleMerger())->merge($borderStyle, $style->build());
 
             $row = array_diff_key($row, array_flip($removeCells));
 
-            $row = array_map('self::formatNumber', $row);
+            array_walk($row, 'self::formatNumber');
 
             /** Create a row with cells and apply the style to all cells */
             $row = WriterEntityFactory::createRowFromArray($row);
@@ -86,12 +86,11 @@ class FormatExcel extends Controller
         return response()->download('report.xlsx');
     }
 
-    public static function formatNumber($var)
+    public static function formatNumber(&$v, $k)
     {
-        if(is_numeric($var)){
-           $var = number_format($var, 0, ".", ",");
+        if(is_numeric($v) && $k != 'account_no'){
+           $v = number_format($v, 0, ".", ",");
         }
-        return $var;
     }
 
     public function _colWidths()
@@ -120,9 +119,7 @@ class FormatExcel extends Controller
             "Approved Overage",
             "Total Budget",
             " Over/(Under)",
-            "Variance",
-            "Last_CTD",
-            "Last_EFC",
+            "Variance"
         ];
     }
 
