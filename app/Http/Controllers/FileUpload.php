@@ -35,6 +35,8 @@ class FileUpload extends Controller
             $sheets = (new FastExcel)->importSheets(storage_path('app/' . $path));
             $this->insertCosts($sheets[0]);
             $this->insertFormat($sheets[1]);
+            // delete the file after import
+            unlink(storage_path('app/' . $path));
         }
         return back()->with('fileUploaded', 'File Imported Successfully.');
     }

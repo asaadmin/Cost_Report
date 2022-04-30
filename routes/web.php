@@ -28,7 +28,6 @@ Route::get('/tableView', [FileUpload::class, 'tableView'])->name("tableView");
 
 Route::get('/reupload', [FileUpload::class, 'reset'])->name("reupload");
 Route::get('/api/tabledata', [FileUpload::class, 'tabledata'])->name("tabledata");
-Route::get('/api/cleartables', [FileUpload::class, 'truncate'])->name("cleartables");
 
 Route::get('/save', [EditedFile::class, 'save'])->name("save");
 Route::put('/updaterow', [EditedFile::class, 'updateCostRow'])->name("updaterow");
@@ -37,8 +36,13 @@ Route::get('/template', [EditedFile::class, 'templateFile'])->name("template");
 // report formated excel
 Route::get('/report', [FormatExcel::class, 'index'])->name("report");
 
+// disable if env producation api and session
+// delete file in storage folder
+Route::group(['middleware' => 'dev'], function(){
+    Route::get('/sessions', [ViewSession::class, 'index'])->name("sessions");
+    Route::get('/api/cleartables', [FileUpload::class, 'truncate'])->name("cleartables");
+});
 
-Route::get('/sessions', [ViewSession::class, 'index'])->name("sessions");
 
 
 
