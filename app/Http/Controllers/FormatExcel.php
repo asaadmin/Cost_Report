@@ -17,6 +17,7 @@ use Box\Spout\Writer\Common\Creator\Style\BorderBuilder;
 use Box\Spout\Writer\Common\Manager\Style\StyleMerger;
 use Box\Spout\Common\Entity\Style\Color;
 use Box\Spout\Common\Entity\Style\CellAlignment;
+use \NumberFormatter;
 
 
 class FormatExcel extends Controller
@@ -64,35 +65,64 @@ class FormatExcel extends Controller
                 $borderBuilder->setBorderTop(Color::BLACK, Border::WIDTH_THICK, Border::STYLE_SOLID);
                 $borderBuilder->setBorderBottom(Color::BLACK, Border::WIDTH_THICK, Border::STYLE_SOLID);
             }
-            $style->setCellAlignment(CellAlignment::RIGHT)->setShouldWrapText();
+            //$style->setCellAlignment(CellAlignment::RIGHT)->setShouldWrapText();
 
             $borderStyle = (new StyleBuilder())->setBorder($borderBuilder->build())->build();
             $styleMerger = (new StyleMerger())->merge($borderStyle, $style->build());
 
             $row = array_diff_key($row, array_flip($removeCells));
 
-            array_walk($row, 'self::formatNumber');
-
+            $rowCells = $this->_cellStyle($row);
+            
             /** Create a row with cells and apply the style to all cells */
-            $row = WriterEntityFactory::createRowFromArray($row);
-            $row->setStyle($styleMerger);
+            $rowToadd = WriterEntityFactory::createRow($rowCells);
+            $rowToadd->setStyle($styleMerger);
             /** Add the row to the writer */
-            $writer->addRow($row);
+            $writer->addRow($rowToadd);
         }        
-
         
         $writer->close();
         return response()->download($filename)->deleteFileAfterSend(true);
     }
 
-    public static function formatNumber(&$v, $k)
+    private function _cellStyle($row)
     {
-        if(is_numeric($v) && $k != 'account_no'){
-           $v = number_format($v, 0, ".", ",");
+        $rowKeys = array_keys($row);
+        $cells = [];
+        foreach ($rowKeys as $key) {
+            if ($key === 'account_no' || $key === 'description') {
+                $cells[$key] =  WriterEntityFactory::createCell($row[$key], self::_wordCellStyling());
+            }
+            else{
+                if(is_numeric($row[$key])){
+                    $row[$key] = self::_accountingNumberFormat($row[$key]);
+                 }
+                $cells[$key] =  WriterEntityFactory::createCell($row[$key], self::_numberCellStyling());
+            }
         }
+        return $cells;
     }
 
-    public function _colWidths()
+    private static function _wordCellStyling(){
+        return (new StyleBuilder())
+        ->setCellAlignment(CellAlignment::LEFT)
+        ->build();
+    }
+    private static function _numberCellStyling(){
+        return (new StyleBuilder())
+        ->setCellAlignment(CellAlignment::RIGHT)
+        ->build();
+    }
+
+    private static function _accountingNumberFormat($value)
+    {
+        $nf = new NumberFormatter('en_US', NumberFormatter::CURRENCY_ACCOUNTING);
+        $nf->setSymbol(NumberFormatter::CURRENCY_SYMBOL, '');
+        $nf->setAttribute(NumberFormatter::MAX_FRACTION_DIGITS, 0);
+        return $nf->format($value);
+    }
+
+    private function _colWidths()
     {
         $out = "<cols>";
         foreach($this->_costSheetHeader() as $header)
