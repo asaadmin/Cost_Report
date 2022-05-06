@@ -4,6 +4,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+    html {
+      font-family: 'Work Sans', sans-serif;
+    }
+  }
+
 $backgroundColor:#f00;
 
 header{
@@ -103,7 +109,7 @@ header{
 
             }
             .tabulator-row .tabulator-cell {
-                white-space: normal;
+                /*white-space: normal;*/
             }
             .tabulator-row-odd{
 

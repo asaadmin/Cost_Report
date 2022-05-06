@@ -19,7 +19,9 @@ class FileUpload extends Controller
         if($costs->count() > 0 && !Session::has('fileUploaded')){
             return redirect('/editdata');
         }
-        return view('pages.home', []);
+        return view('pages.home', [
+            'homepage_link' => config('common.homepage_link')
+        ]);
     }
 
     // /fileupload

@@ -5,9 +5,17 @@
         <x-previewModal></x-previewModal>
     @endif
 
-    <div class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 items-center py-4 sm:pt-0">
+    <div class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 items-center py-4 sm:pt-0 flex-col">
+
+        <div class="mb-9">
+            <h1 class="text-4xl font-bold text-center mb-4"> Welcome to the F3 Cost Reporting App </h1>
+            <div class="font-bold text-center text-xl">
+                <h2>Begin by uploading your formatted Excel File</h2>
+                <p>(for instructions on how to format you file click <a href="{{$homepage_link}}" class="text-secondary-blue">here</a>) </p>
+            </div>
+        </div>
+
         <form action="{{route('saveFile')}}" method="post" enctype="multipart/form-data">
-          <h2 class="text-center mb-5 font-bloder ">Upload excel file</h2>
             @csrf
             @if ($message = Session::get('success'))
             <div class="bg-green-400">
